@@ -270,23 +270,24 @@ body {
   background: var(--pitch-900);
   border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 16px;
+  padding: 14px;
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
 }
 .trophy-box-title {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--floodlight);
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
 }
 .trophies-list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 8px;
+  gap: 6px;
 }
 .trophy-item {
   display: flex;
@@ -306,9 +307,40 @@ body {
   font-weight: 700;
   color: var(--floodlight);
   text-align: center;
-  margin-top: 14px;
+  margin-top: 10px;
   min-height: 32px;
 }
+
+/* Guess Input Group */
+.guess-group {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.guess-input {
+  flex: 1;
+  background: var(--pitch-800);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--chalk);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+}
+.guess-input:focus { border-color: var(--floodlight); }
+.guess-btn {
+  background: var(--floodlight);
+  color: var(--pitch-950);
+  border: none;
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 0 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.guess-btn:active { opacity: 0.85; }
 
 /* Status & Buttons */
 .status { min-height: 20px; font-size: 13px; color: var(--chalk-dim); text-align: center; margin: 10px 0 6px; }
@@ -331,7 +363,6 @@ body {
 .act-btn.p1 { background: var(--win); }
 .act-btn.p2 { background: var(--blue); color: #fff; }
 .act-btn.skip { background: var(--pitch-900); color: var(--chalk-dim); border: 1px solid var(--line); padding: 11px; }
-.act-btn.wrong { background: var(--pitch-800); color: var(--lose); border: 1px solid var(--lose); font-size: 13px; padding: 12px; }
 .act-btn.reveal-step { background: var(--floodlight); font-size: 14px; padding: 13px; }
 .act-btn:active { opacity: .8; }
 
@@ -378,9 +409,9 @@ body {
       </div>
 
       <div class="game-card" id="cardTrophy">
-        <span class="game-card-badge">2 Haklı Meydan Okuma</span>
+        <span class="game-card-badge">2 Haklı Tahmin</span>
         <h2>Kupa Avcısı</h2>
-        <p>Sadece kazandığı kupalar ve ödüller listelenen gizli futbolcuyu 2 hakta bulun.</p>
+        <p>Kariyer kupaları verilen gizli futbolcunun adını yazarak bulun (2 hakkınız var).</p>
       </div>
     </div>
   </main>
@@ -482,7 +513,7 @@ body {
     </div>
     <div class="trophy-container">
       <div class="trophy-header-bar">
-        <span style="font-size:12px; font-weight:700; color:var(--floodlight);">KALAN TAHMİN HAKKI</span>
+        <span style="font-size:12px; font-weight:700; color:var(--floodlight);" id="turnLabel">OYUNCU SIRASI</span>
         <div class="lives-box" id="trophyLives">❤️❤️</div>
       </div>
       <div class="trophy-box">
@@ -490,6 +521,13 @@ body {
         <div class="trophies-list" id="trophiesList"></div>
         <div class="trophy-reveal-name" id="trophyRevealName">???</div>
       </div>
+
+      <!-- TAHMİN YAZMA ALANI -->
+      <div class="guess-group">
+        <input type="text" class="guess-input" id="trophyGuessInput" placeholder="Futbolcu adını yazın..." autocomplete="off">
+        <button class="guess-btn" id="trophyGuessBtn">Tahmin Et</button>
+      </div>
+
       <div class="status" id="statusMsgTrophy"></div>
     </div>
     <div class="action-grid">
@@ -497,7 +535,6 @@ body {
         <button class="act-btn p1" id="p1ScoreBtn4">Oyuncu 1 Bildi</button>
         <button class="act-btn p2" id="p2ScoreBtn4">Oyuncu 2 Bildi</button>
       </div>
-      <button class="act-btn wrong" id="wrongGuessBtn">❌ Yanlış Tahmin (-1 Hak)</button>
       <button class="act-btn skip" id="giveUpTrophyBtn">Pes Et & Cevabı Gör</button>
     </div>
   </section>
@@ -591,105 +628,117 @@ const HISTORIC_MATCHES = [
   }
 ];
 
-// --- KUPA AVCISI VERİLERİ ---
+// --- KUPA AVCISI (YILSIZ VE BALLON D'OR'SUZ HAVUZ) ---
 const TROPHY_PLAYERS = [
   {
     name: "Lionel Messi",
+    aliases: ["messi", "lionel messi", "leo messi"],
     trophies: [
-      { icon: "🌍", text: "1x FIFA Dünya Kupası (2022)" },
+      { icon: "🌍", text: "1x FIFA Dünya Kupası" },
       { icon: "🏆", text: "4x UEFA Şampiyonlar Ligi" },
-      { icon: "🥇", text: "8x Ballon d'Or" },
       { icon: "🌎", text: "2x Copa América" },
+      { icon: "👑", text: "10x La Liga, 2x Ligue 1 Şampiyonluğu" },
       { icon: "⚽", text: "6x Avrupa Altın Ayakkabı" },
-      { icon: "👑", text: "10x La Liga Şampiyonluğu" }
+      { icon: "🎯", text: "8x La Liga Gol Krallığı (Pichichi)" }
     ]
   },
   {
     name: "Cristiano Ronaldo",
+    aliases: ["ronaldo", "cristiano ronaldo", "cr7"],
     trophies: [
       { icon: "🏆", text: "5x UEFA Şampiyonlar Ligi" },
-      { icon: "🥇", text: "5x Ballon d'Or" },
-      { icon: "🌍", text: "1x Avrupa Şampiyonası (EURO 2016)" },
-      { icon: "⚽", text: "4x Avrupa Altın Ayakkabı" },
+      { icon: "🌍", text: "1x Avrupa Şampiyonası (EURO)" },
       { icon: "👑", text: "3x Premier Lig, 2x La Liga, 2x Serie A" },
-      { icon: "🎯", text: "7x Şampiyonlar Ligi Gol Krallığı" }
+      { icon: "⚽", text: "4x Avrupa Altın Ayakkabı" },
+      { icon: "🎯", text: "7x Şampiyonlar Ligi Gol Krallığı" },
+      { icon: "🌍", text: "4x FIFA Kulüpler Dünya Kupası" }
     ]
   },
   {
     name: "Karim Benzema",
+    aliases: ["benzema", "karim benzema"],
     trophies: [
-      { icon: "🥇", text: "1x Ballon d'Or (2022)" },
       { icon: "🏆", text: "5x UEFA Şampiyonlar Ligi" },
       { icon: "👑", text: "4x La Liga, 4x Ligue 1 Şampiyonluğu" },
       { icon: "🌍", text: "1x UEFA Uluslar Ligi" },
-      { icon: "⚽", text: "1x Pichichi (La Liga Gol Krallığı)" }
+      { icon: "🌍", text: "5x FIFA Kulüpler Dünya Kupası" },
+      { icon: "⚽", text: "1x La Liga Gol Krallığı (Pichichi)" }
     ]
   },
   {
     name: "Luka Modric",
+    aliases: ["modric", "luka modric"],
     trophies: [
-      { icon: "🥇", text: "1x Ballon d'Or (2018)" },
       { icon: "🏆", text: "6x UEFA Şampiyonlar Ligi" },
-      { icon: "🌍", text: "1x Dünya Kupası İkinciliği (2018 Altın Top)" },
       { icon: "👑", text: "4x La Liga Şampiyonluğu" },
-      { icon: "🌍", text: "5x FIFA Kulüpler Dünya Kupası" }
+      { icon: "🌍", text: "1x Dünya Kupası İkinciliği & 1x Üçüncülüğü" },
+      { icon: "🌍", text: "5x FIFA Kulüpler Dünya Kupası" },
+      { icon: "🥇", text: "1x UEFA Yılın En İyi Oyuncusu" }
     ]
   },
   {
     name: "Ronaldinho",
+    aliases: ["ronaldinho", "ronaldinho gaucho"],
     trophies: [
-      { icon: "🌍", text: "1x FIFA Dünya Kupası (2002)" },
-      { icon: "🥇", text: "1x Ballon d'Or (2005)" },
+      { icon: "🌍", text: "1x FIFA Dünya Kupası" },
       { icon: "🏆", text: "1x UEFA Şampiyonlar Ligi" },
-      { icon: "🌎", text: "1x Copa América, 1x Copa Libertadores" },
+      { icon: "🌎", text: "1x Copa América" },
+      { icon: "🌎", text: "1x Copa Libertadores" },
       { icon: "👑", text: "2x La Liga, 1x Serie A Şampiyonluğu" }
     ]
   },
   {
     name: "Kylian Mbappé",
+    aliases: ["mbappe", "kylian mbappe"],
     trophies: [
-      { icon: "🌍", text: "1x FIFA Dünya Kupası (2018)" },
-      { icon: "🎯", text: "1x Dünya Kupası Gol Krallığı (Altın Ayakkabı 2022)" },
+      { icon: "🌍", text: "1x FIFA Dünya Kupası" },
       { icon: "👑", text: "6x Ligue 1 Şampiyonluğu" },
+      { icon: "🎯", text: "1x Dünya Kupası Gol Krallığı (Altın Ayakkabı)" },
       { icon: "⚽", text: "6x Ligue 1 Gol Krallığı" },
       { icon: "🌍", text: "1x UEFA Uluslar Ligi" }
     ]
   },
   {
     name: "Zlatan Ibrahimovic",
+    aliases: ["ibrahimovic", "zlatan", "zlatan ibrahimovic"],
     trophies: [
       { icon: "👑", text: "5x Serie A, 4x Ligue 1, 1x La Liga, 2x Eredivisie" },
       { icon: "🏆", text: "1x UEFA Avrupa Ligi" },
       { icon: "⚽", text: "3x Ligue 1, 2x Serie A Gol Krallığı" },
-      { icon: "🌟", text: "1x FIFA Puskás Ödülü (2013)" }
+      { icon: "🌟", text: "1x FIFA Puskás Yılın Golü Ödülü" }
     ]
   },
   {
     name: "Erling Haaland",
+    aliases: ["haaland", "erling haaland"],
     trophies: [
       { icon: "🏆", text: "1x UEFA Şampiyonlar Ligi" },
-      { icon: "👑", text: "2x Premier Lig Şampiyonluğu" },
+      { icon: "👑", text: "2x Premier Lig, 2x Avusturya Ligi" },
       { icon: "⚽", text: "1x Avrupa Altın Ayakkabı" },
       { icon: "🎯", text: "2x Premier Lig, 2x Şampiyonlar Ligi Gol Krallığı" },
-      { icon: "🥇", text: "1x UEFA Yılın Futbolcusu" }
+      { icon: "🥇", text: "1x UEFA Yılın Oyuncusu" }
     ]
   },
   {
     name: "Didier Drogba",
+    aliases: ["drogba", "didier drogba"],
     trophies: [
-      { icon: "🏆", text: "1x UEFA Şampiyonlar Ligi (2012 Final MVP)" },
+      { icon: "🏆", text: "1x UEFA Şampiyonlar Ligi" },
       { icon: "👑", text: "4x Premier Lig, 1x Süper Lig Şampiyonluğu" },
       { icon: "⚽", text: "2x Premier Lig Gol Krallığı" },
-      { icon: "🌍", text: "2x Afrika'da Yılın Futbolcusu" }
+      { icon: "🌍", text: "2x Afrika'da Yılın Futbolcusu" },
+      { icon: "🏆", text: "4x İngiltere FA Cup" }
     ]
   },
   {
     name: "Wesley Sneijder",
+    aliases: ["sneijder", "wesley sneijder"],
     trophies: [
-      { icon: "🏆", text: "1x UEFA Şampiyonlar Ligi (2010 Treble)" },
-      { icon: "🌍", text: "1x Dünya Kupası İkinciliği (2010 Gümüş Ayakkabı)" },
+      { icon: "🏆", text: "1x UEFA Şampiyonlar Ligi" },
+      { icon: "🌍", text: "1x Dünya Kupası İkinciliği" },
       { icon: "👑", text: "1x Serie A, 1x La Liga, 2x Süper Lig, 1x Eredivisie" },
-      { icon: "🎯", text: "1x Şampiyonlar Ligi Asist Krallığı" }
+      { icon: "🎯", text: "1x Şampiyonlar Ligi Asist Krallığı" },
+      { icon: "🏆", text: "3x Türkiye Kupası" }
     ]
   }
 ];
@@ -711,6 +760,7 @@ let hiddenSlotsCount = 0;
 let trophyPool = [...TROPHY_PLAYERS];
 let currentTrophyPlayer = null;
 let trophyLives = 2;
+let trophyTurn = "A"; // "A" veya "B"
 
 // --- DOM REFERENCES ---
 const viewHome = document.getElementById("viewHome");
@@ -869,7 +919,7 @@ function nextXIRound() {
             slotEl.classList.add("revealed");
             slotEl.querySelector(".slot-name").textContent = player.name;
             hiddenSlotsCount--;
-            st.textContent = `Açıldı: ${player.name}! Puanı hangi oyuncu bildiyse ona verin.`;
+            st.textContent = `Açıldı: ${player.name}! Puanı bilen oyuncuya verin.`;
             st.className = "status reveal";
 
             if (hiddenSlotsCount <= 0) {
@@ -895,16 +945,27 @@ function renderTrophyLives() {
   else container.textContent = "💔💔";
 }
 
+function updateTurnLabel() {
+  const label = document.getElementById("turnLabel");
+  label.textContent = `SIRA: ${players[trophyTurn]}`;
+}
+
 function nextTrophyRound() {
   if (trophyPool.length === 0) trophyPool = [...TROPHY_PLAYERS];
   const rIdx = Math.floor(Math.random() * trophyPool.length);
   currentTrophyPlayer = trophyPool.splice(rIdx, 1)[0];
   trophyLives = 2;
+  trophyTurn = "A";
   renderTrophyLives();
+  updateTurnLabel();
 
   document.getElementById("trophyRevealName").textContent = "???";
+  document.getElementById("trophyGuessInput").value = "";
+  document.getElementById("trophyGuessInput").disabled = false;
+  document.getElementById("trophyGuessBtn").disabled = false;
+
   const st = document.getElementById("statusMsgTrophy");
-  st.textContent = "Kariyer başarılarına göre oyuncuyu tahmin edin (2 hakkınız var).";
+  st.textContent = "Kupalara göre oyuncuyu tahmin edin ve yazın (2 hakkınız var).";
   st.className = "status";
 
   const list = document.getElementById("trophiesList");
@@ -915,27 +976,41 @@ function nextTrophyRound() {
     item.innerHTML = `<span class="trophy-item-icon">${t.icon}</span><span>${t.text}</span>`;
     list.appendChild(item);
   });
-
-  document.getElementById("wrongGuessBtn").disabled = false;
-  document.getElementById("wrongGuessBtn").style.opacity = "1";
 }
 
-function handleWrongGuess() {
-  if (trophyLives > 0) {
+function normalizeStr(str) {
+  return str.toLowerCase().trim()
+    .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's')
+    .replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c');
+}
+
+function checkTrophyGuess() {
+  const inputEl = document.getElementById("trophyGuessInput");
+  const guess = normalizeStr(inputEl.value);
+  if (!guess) return;
+
+  const isCorrect = currentTrophyPlayer.aliases.some(alias => normalizeStr(alias) === guess);
+  const st = document.getElementById("statusMsgTrophy");
+
+  if (isCorrect) {
+    handlePoint(trophyTurn);
+  } else {
     trophyLives--;
     renderTrophyLives();
-    const st = document.getElementById("statusMsgTrophy");
+    inputEl.value = "";
 
     if (trophyLives === 1) {
-      st.textContent = "Yanlış tahmin! Son 1 hakkınız kaldı, dikkatli düşünün.";
+      trophyTurn = (trophyTurn === "A") ? "B" : "A";
+      updateTurnLabel();
+      st.textContent = `Yanlış tahmin! Son 1 hak kaldı. Sıra ${players[trophyTurn]}'de.`;
       st.className = "status lose";
     } else {
-      document.getElementById("wrongGuessBtn").disabled = true;
-      document.getElementById("wrongGuessBtn").style.opacity = "0.5";
+      document.getElementById("trophyGuessInput").disabled = true;
+      document.getElementById("trophyGuessBtn").disabled = true;
       document.getElementById("trophyRevealName").textContent = currentTrophyPlayer.name;
-      st.textContent = `Haklarınız bitti! Doğru Cevap: ${currentTrophyPlayer.name}`;
+      st.textContent = `Haklar bitti! Doğru Cevap: ${currentTrophyPlayer.name}`;
       st.className = "status lose";
-      setTimeout(nextTrophyRound, 2400);
+      setTimeout(nextTrophyRound, 2500);
     }
   }
 }
@@ -965,11 +1040,13 @@ function handlePoint(who) {
     st.className = "status win";
   } else if (currentMode === "trophy") {
     pulseCard(who, "4");
+    document.getElementById("trophyGuessInput").disabled = true;
+    document.getElementById("trophyGuessBtn").disabled = true;
     document.getElementById("trophyRevealName").textContent = currentTrophyPlayer.name;
     const st = document.getElementById("statusMsgTrophy");
-    st.textContent = `Tebrikler! ${players[who]} doğru bildi: ${currentTrophyPlayer.name}`;
+    st.textContent = `Bravo! ${players[who]} doğru bildi: ${currentTrophyPlayer.name}`;
     st.className = "status win";
-    setTimeout(nextTrophyRound, 1700);
+    setTimeout(nextTrophyRound, 2000);
   }
 }
 
@@ -1049,7 +1126,12 @@ document.getElementById("nextMatchXIBtn").addEventListener("click", nextXIRound)
 
 document.getElementById("p1ScoreBtn4").addEventListener("click", () => handlePoint("A"));
 document.getElementById("p2ScoreBtn4").addEventListener("click", () => handlePoint("B"));
-document.getElementById("wrongGuessBtn").addEventListener("click", handleWrongGuess);
+
+document.getElementById("trophyGuessBtn").addEventListener("click", checkTrophyGuess);
+document.getElementById("trophyGuessInput").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") checkTrophyGuess();
+});
+
 document.getElementById("giveUpTrophyBtn").addEventListener("click", () => {
   document.getElementById("trophyRevealName").textContent = currentTrophyPlayer.name;
   const st = document.getElementById("statusMsgTrophy");

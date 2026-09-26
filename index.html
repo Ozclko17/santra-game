@@ -76,15 +76,15 @@ body {
 .view.active { display: flex; }
 
 /* Home Screen */
-.home-hero { text-align: center; margin: 6px 0 20px; }
+.home-hero { text-align: center; margin: 6px 0 16px; }
 .home-hero h1 { font-family: var(--font-display); font-size: 32px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px; }
 .home-hero p { color: var(--chalk-dim); font-size: 14px; }
-.games-grid { display: flex; flex-direction: column; gap: 12px; }
+.games-grid { display: flex; flex-direction: column; gap: 10px; }
 .game-card {
   background: var(--pitch-900);
   border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 16px;
+  padding: 14px 16px;
   cursor: pointer;
   position: relative;
   transition: transform .15s, border-color .2s;
@@ -102,7 +102,7 @@ body {
   border-radius: 4px;
   margin-bottom: 6px;
 }
-.game-card h2 { font-family: var(--font-display); font-size: 22px; margin-bottom: 4px; color: var(--chalk); }
+.game-card h2 { font-family: var(--font-display); font-size: 20px; margin-bottom: 3px; color: var(--chalk); }
 .game-card p { font-size: 13px; color: var(--chalk-dim); line-height: 1.4; }
 
 /* Setup Screen */
@@ -215,9 +215,9 @@ body {
   background: var(--pitch-900);
   border: 1px solid var(--line);
   border-radius: 10px;
-  padding: 10px 14px;
+  padding: 8px 12px;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .match-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--floodlight); }
 .match-sub { font-size: 12px; color: var(--chalk-dim); margin-top: 2px; }
@@ -244,23 +244,76 @@ body {
   flex-direction: column;
   justify-content: center;
   min-height: 48px;
-  position: relative;
   transition: all .2s;
 }
-.slot-pos { font-size: 10px; font-weight: 700; color: var(--floodlight); letter-spacing: 0.5px; }
+.slot-pos { font-size: 10px; font-weight: 700; color: var(--floodlight); }
 .slot-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
-.player-slot.hidden-slot {
-  background: var(--pitch-700);
-  border-color: var(--floodlight);
-  cursor: pointer;
-}
+.player-slot.hidden-slot { background: var(--pitch-700); border-color: var(--floodlight); cursor: pointer; }
 .player-slot.hidden-slot .slot-name { color: var(--floodlight); font-weight: 700; font-family: var(--font-display); font-size: 15px; }
-.player-slot.revealed { background: var(--pitch-800); border-color: var(--win); animation: pulseGreen .4s ease; }
-.player-slot.revealed .slot-name { color: var(--win); font-family: var(--font-body); font-size: 12px; font-weight: 600; }
+.player-slot.revealed { background: var(--pitch-800); border-color: var(--win); }
+.player-slot.revealed .slot-name { color: var(--win); font-family: var(--font-body); font-size: 12px; }
 
-/* Status & Action Buttons */
+/* Kupa Avcısı Arena */
+.trophy-container { flex: 1; display: flex; flex-direction: column; width: 100%; }
+.trophy-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--pitch-900);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+}
+.lives-box { display: flex; gap: 4px; font-size: 18px; }
+.trophy-box {
+  background: var(--pitch-900);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.trophy-box-title {
+  font-size: 12px;
+  color: var(--floodlight);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.trophies-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+.trophy-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--pitch-800);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.trophy-item-icon { font-size: 16px; }
+.trophy-reveal-name {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--floodlight);
+  text-align: center;
+  margin-top: 14px;
+  min-height: 32px;
+}
+
+/* Status & Buttons */
 .status { min-height: 20px; font-size: 13px; color: var(--chalk-dim); text-align: center; margin: 10px 0 6px; }
 .status.win { color: var(--win); font-weight: 600; }
+.status.lose { color: var(--lose); font-weight: 600; }
 .status.reveal { color: var(--floodlight); font-weight: 600; }
 .action-grid { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
 .scorer-buttons { display: flex; gap: 8px; }
@@ -278,11 +331,11 @@ body {
 .act-btn.p1 { background: var(--win); }
 .act-btn.p2 { background: var(--blue); color: #fff; }
 .act-btn.skip { background: var(--pitch-900); color: var(--chalk-dim); border: 1px solid var(--line); padding: 11px; }
+.act-btn.wrong { background: var(--pitch-800); color: var(--lose); border: 1px solid var(--lose); font-size: 13px; padding: 12px; }
 .act-btn.reveal-step { background: var(--floodlight); font-size: 14px; padding: 13px; }
 .act-btn:active { opacity: .8; }
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes pulseGreen { 0% { transform: scale(0.96); } 50% { transform: scale(1.04); } 100% { transform: scale(1); } }
 </style>
 </head>
 <body>
@@ -322,6 +375,12 @@ body {
         <span class="game-card-badge">Efsane Kadrolar</span>
         <h2>11'i Tamamla</h2>
         <p>Tarihi maç kadrolarında soru işaretli mevkileri bulun, sahayı tamamlayın.</p>
+      </div>
+
+      <div class="game-card" id="cardTrophy">
+        <span class="game-card-badge">2 Haklı Meydan Okuma</span>
+        <h2>Kupa Avcısı</h2>
+        <p>Sadece kazandığı kupalar ve ödüller listelenen gizli futbolcuyu 2 hakta bulun.</p>
       </div>
     </div>
   </main>
@@ -415,6 +474,34 @@ body {
     </div>
   </section>
 
+  <!-- 6. VIEW: KUPA AVICISI ARENASI -->
+  <section class="view" id="viewArenaTrophy">
+    <div class="score-row">
+      <div class="score-card" id="cardA4"><div class="score-name" id="nameA4">Oyuncu 1</div><div class="score-num" id="scoreA4">0</div></div>
+      <div class="score-card" id="cardB4"><div class="score-name" id="nameB4">Oyuncu 2</div><div class="score-num" id="scoreB4">0</div></div>
+    </div>
+    <div class="trophy-container">
+      <div class="trophy-header-bar">
+        <span style="font-size:12px; font-weight:700; color:var(--floodlight);">KALAN TAHMİN HAKKI</span>
+        <div class="lives-box" id="trophyLives">❤️❤️</div>
+      </div>
+      <div class="trophy-box">
+        <div class="trophy-box-title">🏆 KAZANILAN KUPALAR VE BAŞARILAR</div>
+        <div class="trophies-list" id="trophiesList"></div>
+        <div class="trophy-reveal-name" id="trophyRevealName">???</div>
+      </div>
+      <div class="status" id="statusMsgTrophy"></div>
+    </div>
+    <div class="action-grid">
+      <div class="scorer-buttons">
+        <button class="act-btn p1" id="p1ScoreBtn4">Oyuncu 1 Bildi</button>
+        <button class="act-btn p2" id="p2ScoreBtn4">Oyuncu 2 Bildi</button>
+      </div>
+      <button class="act-btn wrong" id="wrongGuessBtn">❌ Yanlış Tahmin (-1 Hak)</button>
+      <button class="act-btn skip" id="giveUpTrophyBtn">Pes Et & Cevabı Gör</button>
+    </div>
+  </section>
+
 </div>
 
 <script>
@@ -504,8 +591,111 @@ const HISTORIC_MATCHES = [
   }
 ];
 
+// --- KUPA AVCISI VERİLERİ ---
+const TROPHY_PLAYERS = [
+  {
+    name: "Lionel Messi",
+    trophies: [
+      { icon: "🌍", text: "1x FIFA Dünya Kupası (2022)" },
+      { icon: "🏆", text: "4x UEFA Şampiyonlar Ligi" },
+      { icon: "🥇", text: "8x Ballon d'Or" },
+      { icon: "🌎", text: "2x Copa América" },
+      { icon: "⚽", text: "6x Avrupa Altın Ayakkabı" },
+      { icon: "👑", text: "10x La Liga Şampiyonluğu" }
+    ]
+  },
+  {
+    name: "Cristiano Ronaldo",
+    trophies: [
+      { icon: "🏆", text: "5x UEFA Şampiyonlar Ligi" },
+      { icon: "🥇", text: "5x Ballon d'Or" },
+      { icon: "🌍", text: "1x Avrupa Şampiyonası (EURO 2016)" },
+      { icon: "⚽", text: "4x Avrupa Altın Ayakkabı" },
+      { icon: "👑", text: "3x Premier Lig, 2x La Liga, 2x Serie A" },
+      { icon: "🎯", text: "7x Şampiyonlar Ligi Gol Krallığı" }
+    ]
+  },
+  {
+    name: "Karim Benzema",
+    trophies: [
+      { icon: "🥇", text: "1x Ballon d'Or (2022)" },
+      { icon: "🏆", text: "5x UEFA Şampiyonlar Ligi" },
+      { icon: "👑", text: "4x La Liga, 4x Ligue 1 Şampiyonluğu" },
+      { icon: "🌍", text: "1x UEFA Uluslar Ligi" },
+      { icon: "⚽", text: "1x Pichichi (La Liga Gol Krallığı)" }
+    ]
+  },
+  {
+    name: "Luka Modric",
+    trophies: [
+      { icon: "🥇", text: "1x Ballon d'Or (2018)" },
+      { icon: "🏆", text: "6x UEFA Şampiyonlar Ligi" },
+      { icon: "🌍", text: "1x Dünya Kupası İkinciliği (2018 Altın Top)" },
+      { icon: "👑", text: "4x La Liga Şampiyonluğu" },
+      { icon: "🌍", text: "5x FIFA Kulüpler Dünya Kupası" }
+    ]
+  },
+  {
+    name: "Ronaldinho",
+    trophies: [
+      { icon: "🌍", text: "1x FIFA Dünya Kupası (2002)" },
+      { icon: "🥇", text: "1x Ballon d'Or (2005)" },
+      { icon: "🏆", text: "1x UEFA Şampiyonlar Ligi" },
+      { icon: "🌎", text: "1x Copa América, 1x Copa Libertadores" },
+      { icon: "👑", text: "2x La Liga, 1x Serie A Şampiyonluğu" }
+    ]
+  },
+  {
+    name: "Kylian Mbappé",
+    trophies: [
+      { icon: "🌍", text: "1x FIFA Dünya Kupası (2018)" },
+      { icon: "🎯", text: "1x Dünya Kupası Gol Krallığı (Altın Ayakkabı 2022)" },
+      { icon: "👑", text: "6x Ligue 1 Şampiyonluğu" },
+      { icon: "⚽", text: "6x Ligue 1 Gol Krallığı" },
+      { icon: "🌍", text: "1x UEFA Uluslar Ligi" }
+    ]
+  },
+  {
+    name: "Zlatan Ibrahimovic",
+    trophies: [
+      { icon: "👑", text: "5x Serie A, 4x Ligue 1, 1x La Liga, 2x Eredivisie" },
+      { icon: "🏆", text: "1x UEFA Avrupa Ligi" },
+      { icon: "⚽", text: "3x Ligue 1, 2x Serie A Gol Krallığı" },
+      { icon: "🌟", text: "1x FIFA Puskás Ödülü (2013)" }
+    ]
+  },
+  {
+    name: "Erling Haaland",
+    trophies: [
+      { icon: "🏆", text: "1x UEFA Şampiyonlar Ligi" },
+      { icon: "👑", text: "2x Premier Lig Şampiyonluğu" },
+      { icon: "⚽", text: "1x Avrupa Altın Ayakkabı" },
+      { icon: "🎯", text: "2x Premier Lig, 2x Şampiyonlar Ligi Gol Krallığı" },
+      { icon: "🥇", text: "1x UEFA Yılın Futbolcusu" }
+    ]
+  },
+  {
+    name: "Didier Drogba",
+    trophies: [
+      { icon: "🏆", text: "1x UEFA Şampiyonlar Ligi (2012 Final MVP)" },
+      { icon: "👑", text: "4x Premier Lig, 1x Süper Lig Şampiyonluğu" },
+      { icon: "⚽", text: "2x Premier Lig Gol Krallığı" },
+      { icon: "🌍", text: "2x Afrika'da Yılın Futbolcusu" }
+    ]
+  },
+  {
+    name: "Wesley Sneijder",
+    trophies: [
+      { icon: "🏆", text: "1x UEFA Şampiyonlar Ligi (2010 Treble)" },
+      { icon: "🌍", text: "1x Dünya Kupası İkinciliği (2010 Gümüş Ayakkabı)" },
+      { icon: "👑", text: "1x Serie A, 1x La Liga, 2x Süper Lig, 1x Eredivisie" },
+      { icon: "🎯", text: "1x Şampiyonlar Ligi Asist Krallığı" }
+    ]
+  }
+];
+
 // --- APP STATE ---
-let currentMode = "321"; // "321" | "career" | "xi"
+let currentMode = "321"; // "321" | "career" | "xi" | "trophy"
 let players = { A: "Oyuncu 1", B: "Oyuncu 2" };
 let scores = { A: 0, B: 0 };
 
@@ -518,12 +708,17 @@ let matchPoolXI = [...HISTORIC_MATCHES];
 let currentXI = null;
 let hiddenSlotsCount = 0;
 
+let trophyPool = [...TROPHY_PLAYERS];
+let currentTrophyPlayer = null;
+let trophyLives = 2;
+
 // --- DOM REFERENCES ---
 const viewHome = document.getElementById("viewHome");
 const viewSetup = document.getElementById("viewSetup");
 const viewArena321 = document.getElementById("viewArena321");
 const viewArenaCareer = document.getElementById("viewArenaCareer");
 const viewArenaXI = document.getElementById("viewArenaXI");
+const viewArenaTrophy = document.getElementById("viewArenaTrophy");
 
 const headerHomeBtn = document.getElementById("headerHomeBtn");
 const headerResetBtn = document.getElementById("headerResetBtn");
@@ -531,16 +726,16 @@ const player1Input = document.getElementById("player1Input");
 const player2Input = document.getElementById("player2Input");
 
 function showView(view) {
-  [viewHome, viewSetup, viewArena321, viewArenaCareer, viewArenaXI].forEach(v => v.classList.remove("active"));
+  [viewHome, viewSetup, viewArena321, viewArenaCareer, viewArenaXI, viewArenaTrophy].forEach(v => v.classList.remove("active"));
   view.classList.add("active");
 
-  const inGame = (view === viewArena321 || view === viewArenaCareer || view === viewArenaXI);
+  const inGame = (view !== viewHome && view !== viewSetup);
   headerHomeBtn.style.display = inGame ? "block" : "none";
   headerResetBtn.style.display = inGame ? "block" : "none";
 }
 
 function updateScoreboard() {
-  ["1", "2", "3"].forEach(s => {
+  ["1", "2", "3", "4"].forEach(s => {
     document.getElementById(`scoreA${s}`).textContent = scores.A;
     document.getElementById(`scoreB${s}`).textContent = scores.B;
     document.getElementById(`nameA${s}`).textContent = players.A;
@@ -647,7 +842,6 @@ function nextXIRound() {
     row.forEach((p, cI) => flatPlayers.push({ rI, cI, name: p.name }));
   });
 
-  // 3 rastgele gizlenecek oyuncu seçimi
   const shuffled = [...flatPlayers].sort(() => 0.5 - Math.random());
   const hiddenKeys = new Set(shuffled.slice(0, 3).map(p => `${p.rI}-${p.cI}`));
   hiddenSlotsCount = 3;
@@ -680,7 +874,7 @@ function nextXIRound() {
 
             if (hiddenSlotsCount <= 0) {
               setTimeout(() => {
-                st.textContent = "Tüm 11 tamamlandı! Sıradaki kadroya geçebilirsiniz.";
+                st.textContent = "Tüm 11 tamamlandı! Sıradaki maça geçebilirsiniz.";
                 st.className = "status win";
               }, 600);
             }
@@ -691,6 +885,59 @@ function nextXIRound() {
     });
     board.appendChild(lineEl);
   });
+}
+
+// --- KUPA AVCISI ENGINE ---
+function renderTrophyLives() {
+  const container = document.getElementById("trophyLives");
+  if (trophyLives === 2) container.textContent = "❤️❤️";
+  else if (trophyLives === 1) container.textContent = "💔❤️";
+  else container.textContent = "💔💔";
+}
+
+function nextTrophyRound() {
+  if (trophyPool.length === 0) trophyPool = [...TROPHY_PLAYERS];
+  const rIdx = Math.floor(Math.random() * trophyPool.length);
+  currentTrophyPlayer = trophyPool.splice(rIdx, 1)[0];
+  trophyLives = 2;
+  renderTrophyLives();
+
+  document.getElementById("trophyRevealName").textContent = "???";
+  const st = document.getElementById("statusMsgTrophy");
+  st.textContent = "Kariyer başarılarına göre oyuncuyu tahmin edin (2 hakkınız var).";
+  st.className = "status";
+
+  const list = document.getElementById("trophiesList");
+  list.innerHTML = "";
+  currentTrophyPlayer.trophies.forEach(t => {
+    const item = document.createElement("div");
+    item.className = "trophy-item";
+    item.innerHTML = `<span class="trophy-item-icon">${t.icon}</span><span>${t.text}</span>`;
+    list.appendChild(item);
+  });
+
+  document.getElementById("wrongGuessBtn").disabled = false;
+  document.getElementById("wrongGuessBtn").style.opacity = "1";
+}
+
+function handleWrongGuess() {
+  if (trophyLives > 0) {
+    trophyLives--;
+    renderTrophyLives();
+    const st = document.getElementById("statusMsgTrophy");
+
+    if (trophyLives === 1) {
+      st.textContent = "Yanlış tahmin! Son 1 hakkınız kaldı, dikkatli düşünün.";
+      st.className = "status lose";
+    } else {
+      document.getElementById("wrongGuessBtn").disabled = true;
+      document.getElementById("wrongGuessBtn").style.opacity = "0.5";
+      document.getElementById("trophyRevealName").textContent = currentTrophyPlayer.name;
+      st.textContent = `Haklarınız bitti! Doğru Cevap: ${currentTrophyPlayer.name}`;
+      st.className = "status lose";
+      setTimeout(nextTrophyRound, 2400);
+    }
+  }
 }
 
 // --- GLOBAL POINT HANDLER ---
@@ -716,6 +963,13 @@ function handlePoint(who) {
     const st = document.getElementById("statusMsgXI");
     st.textContent = `${players[who]} puanı hanesine yazdırdı!`;
     st.className = "status win";
+  } else if (currentMode === "trophy") {
+    pulseCard(who, "4");
+    document.getElementById("trophyRevealName").textContent = currentTrophyPlayer.name;
+    const st = document.getElementById("statusMsgTrophy");
+    st.textContent = `Tebrikler! ${players[who]} doğru bildi: ${currentTrophyPlayer.name}`;
+    st.className = "status win";
+    setTimeout(nextTrophyRound, 1700);
   }
 }
 
@@ -738,6 +992,12 @@ document.getElementById("cardXI").addEventListener("click", () => {
   showView(viewSetup);
 });
 
+document.getElementById("cardTrophy").addEventListener("click", () => {
+  currentMode = "trophy";
+  document.getElementById("setupTitle").textContent = "KUPA AVICISI";
+  showView(viewSetup);
+});
+
 document.getElementById("setupBackBtn").addEventListener("click", () => showView(viewHome));
 document.getElementById("brandBtn").addEventListener("click", () => showView(viewHome));
 
@@ -756,6 +1016,9 @@ document.getElementById("beginMatchBtn").addEventListener("click", () => {
   } else if (currentMode === "xi") {
     showView(viewArenaXI);
     nextXIRound();
+  } else if (currentMode === "trophy") {
+    showView(viewArenaTrophy);
+    nextTrophyRound();
   }
 });
 
@@ -783,6 +1046,17 @@ document.getElementById("giveUpCareerBtn").addEventListener("click", () => {
 document.getElementById("p1ScoreBtn3").addEventListener("click", () => handlePoint("A"));
 document.getElementById("p2ScoreBtn3").addEventListener("click", () => handlePoint("B"));
 document.getElementById("nextMatchXIBtn").addEventListener("click", nextXIRound);
+
+document.getElementById("p1ScoreBtn4").addEventListener("click", () => handlePoint("A"));
+document.getElementById("p2ScoreBtn4").addEventListener("click", () => handlePoint("B"));
+document.getElementById("wrongGuessBtn").addEventListener("click", handleWrongGuess);
+document.getElementById("giveUpTrophyBtn").addEventListener("click", () => {
+  document.getElementById("trophyRevealName").textContent = currentTrophyPlayer.name;
+  const st = document.getElementById("statusMsgTrophy");
+  st.textContent = `Doğru Cevap: ${currentTrophyPlayer.name}`;
+  st.className = "status reveal";
+  setTimeout(nextTrophyRound, 2000);
+});
 
 // Header Buttons
 headerResetBtn.addEventListener("click", () => {

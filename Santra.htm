@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SANTRA | Futbol Trivia & Mini Oyunlar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pitch-950: #071510;
+  --pitch-900: #0b1f17;
+  --pitch-800: #122a20;
+  --pitch-700: #1b3d2f;
+  --line: #2c4638;
+  --chalk: #f4f4ef;
+  --chalk-dim: #9eb0a4;
+  --floodlight: #f5c242;
+  --blue: #4d9de0;
+  --win: #3ccb6f;
+  --font-display: 'Oswald', Impact, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  min-height: 100vh;
+  background: var(--pitch-950);
+  color: var(--chalk);
+  font-family: var(--font-body);
+  display: flex;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.app-container {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 18px env(safe-area-inset-bottom, 20px);
+}
+
+/* Header */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 1px;
+}
+.brand span { color: var(--floodlight); }
+.nav-btn {
+  background: var(--pitch-800);
+  border: 1px solid var(--line);
+  color: var(--chalk-dim);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.nav-btn:active { background: var(--line); color: var(--chalk); }
+
+/* Views */
+.view { display: none; width: 100%; flex-direction: column; flex: 1; }
+.view.active { display: flex; }
+
+/* Home Screen */
+.home-hero {
+  text-align: center;
+  margin: 10px 0 28px;
+}
+.home-hero h1 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.home-hero p {
+  color: var(--chalk-dim);
+  font-size: 14px;
+}
+.games-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.game-card {
+  background: var(--pitch-900);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform .15s, border-color .2s;
+}
+.game-card:hover { border-color: var(--floodlight); }
+.game-card:active { transform: scale(0.98); }
+.game-card-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--pitch-950);
+  background: var(--floodlight);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+.game-card h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  margin-bottom: 4px;
+  color: var(--chalk);
+}
+.game-card p {
+  font-size: 13px;
+  color: var(--chalk-dim);
+  line-height: 1.4;
+}
+.game-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+.game-card.disabled:active { transform: none; }
+.game-card.disabled .game-card-badge {
+  background: var(--pitch-800);
+  color: var(--chalk-dim);
+}
+
+/* Setup Modal / Screen */
+.setup-box {
+  background: var(--pitch-900);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px 18px;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.setup-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+}
+.setup-desc {
+  font-size: 13px;
+  color: var(--chalk-dim);
+  margin-bottom: 6px;
+}
+.name-input {
+  background: var(--pitch-800);
+  border: 1px solid var(--line);
+  color: var(--chalk);
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 14px;
+  border-radius: 10px;
+  outline: none;
+  text-align: center;
+}
+.name-input:focus { border-color: var(--floodlight); }
+.primary-btn {
+  background: var(--floodlight);
+  color: var(--pitch-950);
+  border: none;
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.primary-btn:active { opacity: 0.85; }
+
+/* 3-2-1 GO Arena */
+.score-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.score-card {
+  flex: 1;
+  background: var(--pitch-900);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 10px;
+  text-align: center;
+  transition: transform .15s, border-color .3s;
+}
+.score-card.pulse {
+  transform: scale(1.05);
+  border-color: var(--floodlight);
+}
+.score-name {
+  font-size: 13px;
+  color: var(--chalk-dim);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+.score-num {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+}
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px 0;
+}
+.team-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.league-tag {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--floodlight);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.team-name {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 8.5vw, 42px);
+  font-weight: 700;
+  line-height: 1.1;
+}
+.vs {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--chalk-dim);
+  margin: 12px 0;
+  letter-spacing: 2px;
+}
+.status {
+  min-height: 24px;
+  font-size: 14px;
+  color: var(--chalk-dim);
+  margin-top: 20px;
+  font-weight: 500;
+}
+.status.win { color: var(--win); }
+
+/* In-Game Action Buttons */
+.action-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+  padding-bottom: 8px;
+}
+.scorer-buttons {
+  display: flex;
+  gap: 10px;
+}
+.act-btn {
+  flex: 1;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 8px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--pitch-950);
+  transition: opacity .15s;
+}
+.act-btn.p1 { background: var(--win); }
+.act-btn.p2 { background: var(--blue); color: #fff; }
+.act-btn.skip {
+  background: var(--pitch-900);
+  color: var(--chalk-dim);
+  border: 1px solid var(--line);
+  padding: 13px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+.act-btn:active { opacity: .8; }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="brand">SANTRA<span>.</span></div>
+    <div style="display:flex; gap:6px;">
+      <button class="nav-btn" id="headerHomeBtn" style="display:none;">Ana Menü</button>
+      <button class="nav-btn" id="headerResetBtn" style="display:none;">Skoru Sıfırla</button>
+    </div>
+  </header>
+
+  <!-- 1. VIEW: ANA SAYFA (OYUN SEÇİMİ) -->
+  <main class="view active" id="viewHome">
+    <div class="home-hero">
+      <h1>FUTBOL TRIVIA</h1>
+      <p>Oynamak istediğin modu seç ve başla</p>
+    </div>
+
+    <div class="games-grid">
+      <div class="game-card" id="card321Go">
+        <span class="game-card-badge">2 Kişilik Kapışma</span>
+        <h2>3 - 2 - 1 GO</h2>
+        <p>Ekrana gelen iki takımda da forma giymiş ortak futbolcuyu ilk söyleyen puanı kapar.</p>
+      </div>
+
+      <div class="game-card disabled">
+        <span class="game-card-badge">Yakında</span>
+        <h2>Kariyer Yolu</h2>
+        <p>Kulüp geçmişi sırayla verilen gizli futbolcuyu en az ipucuyla tahmin et.</p>
+      </div>
+
+      <div class="game-card disabled">
+        <span class="game-card-badge">Yakında</span>
+        <h2>11'i Tamamla</h2>
+        <p>Efsane maç kadrolarındaki eksik oyuncuları bulma mücadelesi.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- 2. VIEW: 3-2-1 GO OYUNCU GİRİŞİ -->
+  <section class="view" id="viewSetup">
+    <div class="setup-box">
+      <h2 class="setup-title">3 - 2 - 1 GO</h2>
+      <p class="setup-desc">Rakibini belirle, hazır olduğunuzda başla butonuna bas.</p>
+      <input class="name-input" id="player1Input" placeholder="1. Oyuncu Adı" maxlength="15">
+      <input class="name-input" id="player2Input" placeholder="2. Oyuncu Adı" maxlength="15">
+      <button class="primary-btn" id="beginMatchBtn">Maça Başla</button>
+      <button class="nav-btn" id="setupBackBtn" style="margin-top:4px;">Geri Dön</button>
+    </div>
+  </section>
+
+  <!-- 3. VIEW: OYUN ARENASI -->
+  <section class="view" id="viewArena">
+    <div class="score-row">
+      <div class="score-card" id="cardA">
+        <div class="score-name" id="nameA">Oyuncu 1</div>
+        <div class="score-num" id="scoreA">0</div>
+      </div>
+      <div class="score-card" id="cardB">
+        <div class="score-name" id="nameB">Oyuncu 2</div>
+        <div class="score-num" id="scoreB">0</div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="team-block">
+        <div class="league-tag" id="leagueA">LİG</div>
+        <div class="team-name" id="teamA">Takım 1</div>
+      </div>
+      <div class="vs">&amp;</div>
+      <div class="team-block">
+        <div class="league-tag" id="leagueB">LİG</div>
+        <div class="team-name" id="teamB">Takım 2</div>
+      </div>
+      <div class="status" id="statusMessage"></div>
+    </div>
+
+    <div class="action-grid">
+      <div class="scorer-buttons">
+        <button class="act-btn p1" id="p1ScoreBtn">Oyuncu 1 Bildi</button>
+        <button class="act-btn p2" id="p2ScoreBtn">Oyuncu 2 Bildi</button>
+      </div>
+      <button class="act-btn skip" id="skipBtn">Kimse Bulamadı (Pas Geç)</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// --- TAKIM VE LİG HAVUZU ---
+const LEAGUES = {
+  "Premier Lig": ["Arsenal","Aston Villa","Bournemouth","Brentford","Brighton & Hove Albion","Chelsea","Coventry City","Crystal Palace","Everton","Fulham","Hull City","Ipswich Town","Leeds United","Liverpool","Manchester City","Manchester United","Newcastle United","Nottingham Forest","Sunderland","Tottenham Hotspur"],
+  "La Liga": ["FC Barcelona","Real Madrid","Villarreal","Atletico Madrid","Real Betis","Celta Vigo","Real Sociedad","Getafe","Athletic Bilbao","Valencia","Sevilla","Rayo Vallecano","Osasuna","Espanyol","Alaves","Levante","Elche","Racing Santander","Deportivo La Coruna","Malaga"],
+  "Serie A": ["Atalanta","Bologna","Cagliari","Como","Fiorentina","Frosinone","Genoa","Inter","Juventus","Lazio","Lecce","Milan","Monza","Napoli","Parma","Roma","Sassuolo","Torino","Udinese","Venezia"],
+  "Bundesliga": ["Bayern Münih","Borussia Dortmund","RB Leipzig","Bayer Leverkusen","VfB Stuttgart","Eintracht Frankfurt","TSG Hoffenheim","Union Berlin","SC Freiburg","Mainz 05","Borussia Mönchengladbach","Werder Bremen","FC Augsburg","1. FC Köln","Hamburger SV","Schalke 04","SV Elversberg","SC Paderborn"],
+  "Ligue 1": ["AJ Auxerre","Angers","AS Monaco","Troyes","Le Havre","Le Mans","Lorient","Lille","Nice","Olympique Lyonnais","Marsilya","Paris FC","Paris Saint-Germain","Lens","Stade Brestois","Stade Rennais","Strasbourg","Toulouse"],
+  "Süper Lig": ["Amed Sportif","Beşiktaş","Corendon Alanyaspor","Çaykur Rizespor","Çorum FK","Erzurumspor FK","Eyüpspor","Fenerbahçe","Galatasaray","Gaziantep FK","Gençlerbirliği","Göztepe","İstanbul Başakşehir","Kasımpaşa","Kocaelispor","Konyaspor","Samsunspor","Trabzonspor"]
+};
+
+const BIG_CLUBS = new Set([
+  "Real Madrid","FC Barcelona","Atletico Madrid",
+  "Manchester United","Manchester City","Liverpool","Chelsea","Arsenal","Tottenham Hotspur",
+  "Bayern Münih","Borussia Dortmund",
+  "Juventus","Inter","Milan","Napoli","Roma",
+  "AS Monaco","Paris Saint-Germain","Olympique Lyonnais","Marsilya",
+  "Galatasaray","Fenerbahçe","Beşiktaş","Trabzonspor"
+]);
+
+const POOL = [];
+for (const lg in LEAGUES) {
+  LEAGUES[lg].forEach(team => POOL.push({ team, league: lg }));
+}
+
+// --- STATE ---
+let players = { A: "Oyuncu 1", B: "Oyuncu 2" };
+let scores = { A: 0, B: 0 };
+let recentMatches = [];
+
+// --- ELEMENT REFERANSLARI ---
+const viewHome = document.getElementById("viewHome");
+const viewSetup = document.getElementById("viewSetup");
+const viewArena = document.getElementById("viewArena");
+
+const headerHomeBtn = document.getElementById("headerHomeBtn");
+const headerResetBtn = document.getElementById("headerResetBtn");
+
+const player1Input = document.getElementById("player1Input");
+const player2Input = document.getElementById("player2Input");
+
+const nameA = document.getElementById("nameA");
+const nameB = document.getElementById("nameB");
+const scoreA = document.getElementById("scoreA");
+const scoreB = document.getElementById("scoreB");
+const p1ScoreBtn = document.getElementById("p1ScoreBtn");
+const p2ScoreBtn = document.getElementById("p2ScoreBtn");
+
+const leagueA = document.getElementById("leagueA");
+const teamA = document.getElementById("teamA");
+const leagueB = document.getElementById("leagueB");
+const teamB = document.getElementById("teamB");
+const statusMessage = document.getElementById("statusMessage");
+
+// --- EKRAN YÖNETİMİ ---
+function showView(view) {
+  [viewHome, viewSetup, viewArena].forEach(v => v.classList.remove("active"));
+  view.classList.add("active");
+
+  if (view === viewArena) {
+    headerHomeBtn.style.display = "block";
+    headerResetBtn.style.display = "block";
+  } else {
+    headerHomeBtn.style.display = "none";
+    headerResetBtn.style.display = "none";
+  }
+}
+
+// --- OYUN MEKANİĞİ ---
+function buildWeightedPairs() {
+  const pairs = [];
+  for (let i = 0; i < POOL.length; i++) {
+    for (let j = i + 1; j < POOL.length; j++) {
+      const a = POOL[i], b = POOL[j];
+      const key = [a.team, b.team].sort().join("|");
+      if (recentMatches.includes(key)) continue;
+
+      let w = 1;
+      if (a.league === b.league) w *= 4;
+      const aBig = BIG_CLUBS.has(a.team), bBig = BIG_CLUBS.has(b.team);
+      if (aBig && bBig) w *= 5;
+      else if (aBig || bBig) w *= 1.5;
+
+      pairs.push({ a, b, w });
+    }
+  }
+  return pairs;
+}
+
+function getRandomPair() {
+  const pairs = buildWeightedPairs();
+  const totalWeight = pairs.reduce((sum, p) => sum + p.w, 0);
+  let randomVal = Math.random() * totalWeight;
+
+  for (const pair of pairs) {
+    randomVal -= pair.w;
+    if (randomVal <= 0) return pair;
+  }
+  return pairs[pairs.length - 1];
+}
+
+function nextRound() {
+  const pair = getRandomPair();
+  recentMatches.push([pair.a.team, pair.b.team].sort().join("|"));
+  if (recentMatches.length > 15) recentMatches.shift();
+
+  leagueA.textContent = pair.a.league.toUpperCase();
+  teamA.textContent = pair.a.team;
+  leagueB.textContent = pair.b.league.toUpperCase();
+  teamB.textContent = pair.b.team;
+
+  statusMessage.textContent = "";
+  statusMessage.className = "status";
+}
+
+function updateScoreboard() {
+  scoreA.textContent = scores.A;
+  scoreB.textContent = scores.B;
+  nameA.textContent = players.A;
+  nameB.textContent = players.B;
+  p1ScoreBtn.textContent = `${players.A} Bildi`;
+  p2ScoreBtn.textContent = `${players.B} Bildi`;
+}
+
+function givePoint(who) {
+  scores[who]++;
+  updateScoreboard();
+  
+  const targetCard = document.getElementById(who === "A" ? "cardA" : "cardB");
+  targetCard.classList.add("pulse");
+  setTimeout(() => targetCard.classList.remove("pulse"), 350);
+
+  statusMessage.textContent = `${players[who]} bildi ve puanı kaptı!`;
+  statusMessage.className = "status win";
+  setTimeout(nextRound, 700);
+}
+
+// --- ETKİNLİK DİNLEYİCİLERİ ---
+document.getElementById("card321Go").addEventListener("click", () => {
+  showView(viewSetup);
+});
+
+document.getElementById("setupBackBtn").addEventListener("click", () => {
+  showView(viewHome);
+});
+
+document.getElementById("beginMatchBtn").addEventListener("click", () => {
+  players.A = player1Input.value.trim() || "1. Oyuncu";
+  players.B = player2Input.value.trim() || "2. Oyuncu";
+  scores = { A: 0, B: 0 };
+  updateScoreboard();
+  showView(viewArena);
+  nextRound();
+});
+
+p1ScoreBtn.addEventListener("click", () => givePoint("A"));
+p2ScoreBtn.addEventListener("click", () => givePoint("B"));
+
+document.getElementById("skipBtn").addEventListener("click", () => {
+  statusMessage.textContent = "Bulunamadı, yeni takımlar geliyor...";
+  statusMessage.className = "status";
+  setTimeout(nextRound, 600);
+});
+
+headerResetBtn.addEventListener("click", () => {
+  scores = { A: 0, B: 0 };
+  updateScoreboard();
+});
+
+headerHomeBtn.addEventListener("click", () => {
+  player1Input.value = "";
+  player2Input.value = "";
+  scores = { A: 0, B: 0 };
+  showView(viewHome);
+});
+</script>
+</body>
+</html>

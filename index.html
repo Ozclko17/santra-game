@@ -19,6 +19,7 @@
   --floodlight: #f5c242;
   --blue: #4d9de0;
   --win: #3ccb6f;
+  --lose: #e5484d;
   --font-display: 'Oswald', Impact, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
@@ -46,13 +47,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 .brand {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 24px;
   letter-spacing: 1px;
+  cursor: pointer;
 }
 .brand span { color: var(--floodlight); }
 .nav-btn {
@@ -74,26 +76,16 @@ body {
 .view.active { display: flex; }
 
 /* Home Screen */
-.home-hero {
-  text-align: center;
-  margin: 10px 0 28px;
-}
+.home-hero { text-align: center; margin: 10px 0 24px; }
 .home-hero h1 {
   font-family: var(--font-display);
   font-size: 32px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
-.home-hero p {
-  color: var(--chalk-dim);
-  font-size: 14px;
-}
-.games-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
+.home-hero p { color: var(--chalk-dim); font-size: 14px; }
+.games-grid { display: flex; flex-direction: column; gap: 14px; }
 .game-card {
   background: var(--pitch-900);
   border: 1px solid var(--line);
@@ -101,7 +93,6 @@ body {
   padding: 18px;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
   transition: transform .15s, border-color .2s;
 }
 .game-card:hover { border-color: var(--floodlight); }
@@ -117,51 +108,26 @@ body {
   border-radius: 4px;
   margin-bottom: 8px;
 }
-.game-card h2 {
-  font-family: var(--font-display);
-  font-size: 22px;
-  margin-bottom: 4px;
-  color: var(--chalk);
-}
-.game-card p {
-  font-size: 13px;
-  color: var(--chalk-dim);
-  line-height: 1.4;
-}
-.game-card.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  border-style: dashed;
-}
+.game-card h2 { font-family: var(--font-display); font-size: 22px; margin-bottom: 4px; color: var(--chalk); }
+.game-card p { font-size: 13px; color: var(--chalk-dim); line-height: 1.4; }
+.game-card.disabled { opacity: 0.5; cursor: not-allowed; border-style: dashed; }
 .game-card.disabled:active { transform: none; }
-.game-card.disabled .game-card-badge {
-  background: var(--pitch-800);
-  color: var(--chalk-dim);
-}
+.game-card.disabled .game-card-badge { background: var(--pitch-800); color: var(--chalk-dim); }
 
-/* Setup Modal / Screen */
+/* Setup Screen */
 .setup-box {
   background: var(--pitch-900);
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 24px 18px;
   text-align: center;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin: auto 0;
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
-.setup-title {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 700;
-}
-.setup-desc {
-  font-size: 13px;
-  color: var(--chalk-dim);
-  margin-bottom: 6px;
-}
+.setup-title { font-family: var(--font-display); font-size: 26px; font-weight: 700; }
+.setup-desc { font-size: 13px; color: var(--chalk-dim); }
 .name-input {
   background: var(--pitch-800);
   border: 1px solid var(--line);
@@ -184,43 +150,25 @@ body {
   padding: 15px;
   border-radius: 10px;
   cursor: pointer;
-  transition: opacity .15s;
 }
 .primary-btn:active { opacity: 0.85; }
 
-/* 3-2-1 GO Arena */
-.score-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
+/* Scoreboard */
+.score-row { display: flex; gap: 10px; margin-bottom: 16px; }
 .score-card {
   flex: 1;
   background: var(--pitch-900);
   border: 1px solid var(--line);
   border-radius: 12px;
-  padding: 12px 10px;
+  padding: 10px;
   text-align: center;
   transition: transform .15s, border-color .3s;
 }
-.score-card.pulse {
-  transform: scale(1.05);
-  border-color: var(--floodlight);
-}
-.score-name {
-  font-size: 13px;
-  color: var(--chalk-dim);
-  margin-bottom: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 500;
-}
-.score-num {
-  font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 700;
-}
+.score-card.pulse { transform: scale(1.05); border-color: var(--floodlight); }
+.score-name { font-size: 13px; color: var(--chalk-dim); margin-bottom: 2px; font-weight: 500; }
+.score-num { font-family: var(--font-display); font-size: 30px; font-weight: 700; }
+
+/* 3-2-1 GO Arena */
 .stage {
   flex: 1;
   display: flex;
@@ -228,78 +176,98 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 20px 0;
 }
-.team-block {
-  width: 100%;
+.team-block { width: 100%; display: flex; flex-direction: column; align-items: center; }
+.league-tag { font-size: 12px; font-weight: 600; color: var(--floodlight); letter-spacing: 1px; margin-bottom: 4px; }
+.team-name { font-family: var(--font-display); font-size: clamp(28px, 8.5vw, 40px); font-weight: 700; line-height: 1.1; }
+.vs { font-family: var(--font-display); font-size: 16px; color: var(--chalk-dim); margin: 10px 0; }
+
+/* Kariyer Yolu Arena */
+.career-container {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
 }
-.league-tag {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--floodlight);
-  letter-spacing: 1px;
-  margin-bottom: 6px;
-}
-.team-name {
-  font-family: var(--font-display);
-  font-size: clamp(28px, 8.5vw, 42px);
-  font-weight: 700;
-  line-height: 1.1;
-}
-.vs {
-  font-family: var(--font-display);
-  font-size: 16px;
-  color: var(--chalk-dim);
-  margin: 12px 0;
-  letter-spacing: 2px;
-}
-.status {
-  min-height: 24px;
-  font-size: 14px;
-  color: var(--chalk-dim);
-  margin-top: 20px;
-  font-weight: 500;
-}
-.status.win { color: var(--win); }
-
-/* In-Game Action Buttons */
-.action-grid {
+.career-box {
+  width: 100%;
+  background: var(--pitch-900);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  min-height: 240px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: auto;
-  padding-bottom: 8px;
 }
-.scorer-buttons {
+.career-header {
+  font-size: 12px;
+  color: var(--floodlight);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 12px;
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
 }
+.career-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  overflow-y: auto;
+}
+.career-step {
+  display: flex;
+  align-items: center;
+  background: var(--pitch-800);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  animation: fadeIn .3s ease;
+}
+.step-num {
+  font-family: var(--font-display);
+  color: var(--floodlight);
+  font-size: 16px;
+  width: 24px;
+  font-weight: 700;
+}
+.step-team { font-weight: 600; font-size: 14px; }
+.career-player-reveal {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--floodlight);
+  text-align: center;
+  margin-top: 12px;
+  min-height: 32px;
+}
+
+/* Actions */
+.status { min-height: 22px; font-size: 13px; color: var(--chalk-dim); text-align: center; margin: 12px 0 8px; }
+.status.win { color: var(--win); font-weight: 600; }
+.status.reveal { color: var(--floodlight); font-weight: 600; }
+.action-grid { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+.scorer-buttons { display: flex; gap: 8px; }
 .act-btn {
   flex: 1;
   border: none;
-  border-radius: 12px;
-  padding: 16px 8px;
+  border-radius: 10px;
+  padding: 14px 6px;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
   color: var(--pitch-950);
-  transition: opacity .15s;
 }
 .act-btn.p1 { background: var(--win); }
 .act-btn.p2 { background: var(--blue); color: #fff; }
-.act-btn.skip {
-  background: var(--pitch-900);
-  color: var(--chalk-dim);
-  border: 1px solid var(--line);
-  padding: 13px;
-  font-size: 13px;
-  border-radius: 10px;
-}
+.act-btn.skip { background: var(--pitch-900); color: var(--chalk-dim); border: 1px solid var(--line); padding: 12px; }
+.act-btn.reveal-step { background: var(--floodlight); font-size: 14px; padding: 14px; }
 .act-btn:active { opacity: .8; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
@@ -308,14 +276,14 @@ body {
 
   <!-- TOP BAR -->
   <header class="topbar">
-    <div class="brand">SANTRA<span>.</span></div>
+    <div class="brand" id="brandBtn">SANTRA<span>.</span></div>
     <div style="display:flex; gap:6px;">
       <button class="nav-btn" id="headerHomeBtn" style="display:none;">Ana Menü</button>
-      <button class="nav-btn" id="headerResetBtn" style="display:none;">Skoru Sıfırla</button>
+      <button class="nav-btn" id="headerResetBtn" style="display:none;">Sıfırla</button>
     </div>
   </header>
 
-  <!-- 1. VIEW: ANA SAYFA (OYUN SEÇİMİ) -->
+  <!-- 1. VIEW: ANA SAYFA -->
   <main class="view active" id="viewHome">
     <div class="home-hero">
       <h1>FUTBOL TRIVIA</h1>
@@ -326,48 +294,41 @@ body {
       <div class="game-card" id="card321Go">
         <span class="game-card-badge">2 Kişilik Kapışma</span>
         <h2>3 - 2 - 1 GO</h2>
-        <p>Ekrana gelen iki takımda da forma giymiş ortak futbolcuyu ilk söyleyen puanı kapar.</p>
+        <p>Ekrana gelen iki takımda da oynamış ortak futbolcuyu ilk söyleyen puanı kapar.</p>
       </div>
 
-      <div class="game-card disabled">
-        <span class="game-card-badge">Yakında</span>
+      <div class="game-card" id="cardCareer">
+        <span class="game-card-badge">Kulüp İpuçları</span>
         <h2>Kariyer Yolu</h2>
-        <p>Kulüp geçmişi sırayla verilen gizli futbolcuyu en az ipucuyla tahmin et.</p>
+        <p>Oynadığı takımlar sırayla açılan gizli futbolcuyu en az adımla tahmin etmeye çalışın.</p>
       </div>
 
       <div class="game-card disabled">
-        <span class="game-card-badge">Yakında</span>
+        <span class="game-card-badge">Çok Yakında</span>
         <h2>11'i Tamamla</h2>
-        <p>Efsane maç kadrolarındaki eksik oyuncuları bulma mücadelesi.</p>
+        <p>Tarihi maç kadrolarındaki boş mevkileri doldurma kapışması.</p>
       </div>
     </div>
   </main>
 
-  <!-- 2. VIEW: 3-2-1 GO OYUNCU GİRİŞİ -->
+  <!-- 2. VIEW: OYUNCU İSİM AYARI -->
   <section class="view" id="viewSetup">
     <div class="setup-box">
-      <h2 class="setup-title">3 - 2 - 1 GO</h2>
-      <p class="setup-desc">Rakibini belirle, hazır olduğunuzda başla butonuna bas.</p>
+      <h2 class="setup-title" id="setupTitle">OYUNCU SEÇİMİ</h2>
+      <p class="setup-desc">Yarışmacıların isimlerini yazıp maçı başlatın.</p>
       <input class="name-input" id="player1Input" placeholder="1. Oyuncu Adı" maxlength="15">
       <input class="name-input" id="player2Input" placeholder="2. Oyuncu Adı" maxlength="15">
-      <button class="primary-btn" id="beginMatchBtn">Maça Başla</button>
+      <button class="primary-btn" id="beginMatchBtn">Başla</button>
       <button class="nav-btn" id="setupBackBtn" style="margin-top:4px;">Geri Dön</button>
     </div>
   </section>
 
-  <!-- 3. VIEW: OYUN ARENASI -->
-  <section class="view" id="viewArena">
+  <!-- 3. VIEW: 3-2-1 GO ARENASI -->
+  <section class="view" id="viewArena321">
     <div class="score-row">
-      <div class="score-card" id="cardA">
-        <div class="score-name" id="nameA">Oyuncu 1</div>
-        <div class="score-num" id="scoreA">0</div>
-      </div>
-      <div class="score-card" id="cardB">
-        <div class="score-name" id="nameB">Oyuncu 2</div>
-        <div class="score-num" id="scoreB">0</div>
-      </div>
+      <div class="score-card" id="cardA1"><div class="score-name" id="nameA1">Oyuncu 1</div><div class="score-num" id="scoreA1">0</div></div>
+      <div class="score-card" id="cardB1"><div class="score-name" id="nameB1">Oyuncu 2</div><div class="score-num" id="scoreB1">0</div></div>
     </div>
-
     <div class="stage">
       <div class="team-block">
         <div class="league-tag" id="leagueA">LİG</div>
@@ -378,192 +339,286 @@ body {
         <div class="league-tag" id="leagueB">LİG</div>
         <div class="team-name" id="teamB">Takım 2</div>
       </div>
-      <div class="status" id="statusMessage"></div>
+      <div class="status" id="statusMsg321"></div>
     </div>
-
     <div class="action-grid">
       <div class="scorer-buttons">
-        <button class="act-btn p1" id="p1ScoreBtn">Oyuncu 1 Bildi</button>
-        <button class="act-btn p2" id="p2ScoreBtn">Oyuncu 2 Bildi</button>
+        <button class="act-btn p1" id="p1ScoreBtn1">Oyuncu 1 Bildi</button>
+        <button class="act-btn p2" id="p2ScoreBtn1">Oyuncu 2 Bildi</button>
       </div>
-      <button class="act-btn skip" id="skipBtn">Kimse Bulamadı (Pas Geç)</button>
+      <button class="act-btn skip" id="skipBtn321">Bulunamadı (Pas)</button>
+    </div>
+  </section>
+
+  <!-- 4. VIEW: KARİYER YOLU ARENASI -->
+  <section class="view" id="viewArenaCareer">
+    <div class="score-row">
+      <div class="score-card" id="cardA2"><div class="score-name" id="nameA2">Oyuncu 1</div><div class="score-num" id="scoreA2">0</div></div>
+      <div class="score-card" id="cardB2"><div class="score-name" id="nameB2">Oyuncu 2</div><div class="score-num" id="scoreB2">0</div></div>
+    </div>
+    <div class="career-container">
+      <div class="career-box">
+        <div class="career-header">
+          <span>Kariyer Basamakları</span>
+          <span id="stepCounter">1 / 5</span>
+        </div>
+        <div class="career-steps" id="careerStepsContainer"></div>
+        <div class="career-player-reveal" id="careerPlayerReveal">???</div>
+      </div>
+      <div class="status" id="statusMsgCareer"></div>
+    </div>
+    <div class="action-grid">
+      <button class="act-btn reveal-step" id="nextStepBtn">Sıradaki Kulübü Aç</button>
+      <div class="scorer-buttons">
+        <button class="act-btn p1" id="p1ScoreBtn2">Oyuncu 1 Bildi</button>
+        <button class="act-btn p2" id="p2ScoreBtn2">Oyuncu 2 Bildi</button>
+      </div>
+      <button class="act-btn skip" id="giveUpCareerBtn">Cevabı Göster & Geç</button>
     </div>
   </section>
 
 </div>
 
 <script>
-// --- TAKIM VE LİG HAVUZU ---
+// --- TAKIM VE KARİYER VERİ HAVUZLARI ---
 const LEAGUES = {
-  "Premier Lig": ["Arsenal","Aston Villa","Bournemouth","Brentford","Brighton & Hove Albion","Chelsea","Coventry City","Crystal Palace","Everton","Fulham","Hull City","Ipswich Town","Leeds United","Liverpool","Manchester City","Manchester United","Newcastle United","Nottingham Forest","Sunderland","Tottenham Hotspur"],
-  "La Liga": ["FC Barcelona","Real Madrid","Villarreal","Atletico Madrid","Real Betis","Celta Vigo","Real Sociedad","Getafe","Athletic Bilbao","Valencia","Sevilla","Rayo Vallecano","Osasuna","Espanyol","Alaves","Levante","Elche","Racing Santander","Deportivo La Coruna","Malaga"],
-  "Serie A": ["Atalanta","Bologna","Cagliari","Como","Fiorentina","Frosinone","Genoa","Inter","Juventus","Lazio","Lecce","Milan","Monza","Napoli","Parma","Roma","Sassuolo","Torino","Udinese","Venezia"],
-  "Bundesliga": ["Bayern Münih","Borussia Dortmund","RB Leipzig","Bayer Leverkusen","VfB Stuttgart","Eintracht Frankfurt","TSG Hoffenheim","Union Berlin","SC Freiburg","Mainz 05","Borussia Mönchengladbach","Werder Bremen","FC Augsburg","1. FC Köln","Hamburger SV","Schalke 04","SV Elversberg","SC Paderborn"],
-  "Ligue 1": ["AJ Auxerre","Angers","AS Monaco","Troyes","Le Havre","Le Mans","Lorient","Lille","Nice","Olympique Lyonnais","Marsilya","Paris FC","Paris Saint-Germain","Lens","Stade Brestois","Stade Rennais","Strasbourg","Toulouse"],
-  "Süper Lig": ["Amed Sportif","Beşiktaş","Corendon Alanyaspor","Çaykur Rizespor","Çorum FK","Erzurumspor FK","Eyüpspor","Fenerbahçe","Galatasaray","Gaziantep FK","Gençlerbirliği","Göztepe","İstanbul Başakşehir","Kasımpaşa","Kocaelispor","Konyaspor","Samsunspor","Trabzonspor"]
+  "Premier Lig": ["Arsenal","Aston Villa","Bournemouth","Brentford","Brighton & Hove Albion","Chelsea","Crystal Palace","Everton","Fulham","Ipswich Town","Liverpool","Manchester City","Manchester United","Newcastle United","Nottingham Forest","Tottenham Hotspur","West Ham United","Wolverhampton"],
+  "La Liga": ["FC Barcelona","Real Madrid","Villarreal","Atletico Madrid","Real Betis","Celta Vigo","Real Sociedad","Getafe","Athletic Bilbao","Valencia","Sevilla","Rayo Vallecano","Osasuna","Espanyol","Mallorca","Girona"],
+  "Serie A": ["Atalanta","Bologna","Fiorentina","Inter","Juventus","Lazio","Milan","Napoli","Parma","Roma","Torino","Udinese"],
+  "Bundesliga": ["Bayern Münih","Borussia Dortmund","RB Leipzig","Bayer Leverkusen","VfB Stuttgart","Eintracht Frankfurt","TSG Hoffenheim","Werder Bremen","Borussia Mönchengladbach","Wolfsburg"],
+  "Süper Lig": ["Galatasaray","Fenerbahçe","Beşiktaş","Trabzonspor","İstanbul Başakşehir","Samsunspor","Kasımpaşa","Konyaspor","Antalyaspor","Göztepe"]
 };
 
-const BIG_CLUBS = new Set([
-  "Real Madrid","FC Barcelona","Atletico Madrid",
-  "Manchester United","Manchester City","Liverpool","Chelsea","Arsenal","Tottenham Hotspur",
-  "Bayern Münih","Borussia Dortmund",
-  "Juventus","Inter","Milan","Napoli","Roma",
-  "AS Monaco","Paris Saint-Germain","Olympique Lyonnais","Marsilya",
-  "Galatasaray","Fenerbahçe","Beşiktaş","Trabzonspor"
-]);
+const BIG_CLUBS = new Set(["Real Madrid","FC Barcelona","Atletico Madrid","Manchester United","Manchester City","Liverpool","Chelsea","Arsenal","Bayern Münih","Borussia Dortmund","Juventus","Inter","Milan","Paris Saint-Germain","Galatasaray","Fenerbahçe","Beşiktaş","Trabzonspor"]);
 
-const POOL = [];
-for (const lg in LEAGUES) {
-  LEAGUES[lg].forEach(team => POOL.push({ team, league: lg }));
-}
+const POOL_321 = [];
+for (const lg in LEAGUES) { LEAGUES[lg].forEach(team => POOL_321.push({ team, league: lg })); }
+
+const PLAYERS_CAREER = [
+  { name: "Lionel Messi", clubs: ["Barcelona C", "Barcelona B", "FC Barcelona", "Paris Saint-Germain", "Inter Miami"] },
+  { name: "Cristiano Ronaldo", clubs: ["Sporting Lizbon", "Manchester United", "Real Madrid", "Juventus", "Manchester United", "Al-Nassr"] },
+  { name: "Arda Güler", clubs: ["Gençlerbirliği Altyapı", "Fenerbahçe", "Real Madrid"] },
+  { name: "Didier Drogba", clubs: ["Le Mans", "Guingamp", "Marsilya", "Chelsea", "Shanghai Shenhua", "Galatasaray", "Chelsea", "Montreal Impact"] },
+  { name: "Mesut Özil", clubs: ["Schalke 04", "Werder Bremen", "Real Madrid", "Arsenal", "Fenerbahçe", "Başakşehir"] },
+  { name: "Erling Haaland", clubs: ["Bryne", "Molde", "Red Bull Salzburg", "Borussia Dortmund", "Manchester City"] },
+  { name: "Wesley Sneijder", clubs: ["Ajax", "Real Madrid", "Inter", "Galatasaray", "Nice", "Al-Gharafa"] },
+  { name: "Robin van Persie", clubs: ["Feyenoord", "Arsenal", "Manchester United", "Fenerbahçe", "Feyenoord"] },
+  { name: "Mauro Icardi", clubs: ["Sampdoria", "Inter", "Paris Saint-Germain", "Galatasaray"] },
+  { name: "Edin Dzeko", clubs: ["Zeljeznicar", "Teplice", "Wolfsburg", "Manchester City", "Roma", "Inter", "Fenerbahçe"] },
+  { name: "Luka Modric", clubs: ["Dinamo Zagreb", "Zrinjski Mostar", "Inter Zapresic", "Tottenham Hotspur", "Real Madrid"] },
+  { name: "Zlatan Ibrahimovic", clubs: ["Malmö", "Ajax", "Juventus", "Inter", "FC Barcelona", "Milan", "Paris Saint-Germain", "Manchester United", "LA Galaxy", "Milan"] },
+  { name: "Cenk Tosun", clubs: ["Eintracht Frankfurt", "Gaziantepspor", "Beşiktaş", "Everton", "Crystal Palace", "Fenerbahçe"] },
+  { name: "Karim Benzema", clubs: ["Olympique Lyonnais", "Real Madrid", "Al-Ittihad"] },
+  { name: "Radamel Falcao", clubs: ["River Plate", "Porto", "Atletico Madrid", "Monaco", "Manchester United", "Chelsea", "Galatasaray", "Rayo Vallecano"] },
+  { name: "Hakan Çalhanoğlu", clubs: ["Karlsruher", "Hamburg", "Bayer Leverkusen", "Milan", "Inter"] },
+  { name: "Angel Di Maria", clubs: ["Rosario Central", "Benfica", "Real Madrid", "Manchester United", "Paris Saint-Germain", "Juventus", "Benfica"] },
+  { name: "Burak Yılmaz", clubs: ["Antalyaspor", "Beşiktaş", "Manisaspor", "Fenerbahçe", "Eskişehirspor", "Trabzonspor", "Galatasaray", "Beijing Guoan", "Lille", "Fortuna Sittard"] }
+];
 
 // --- STATE ---
+let currentMode = "321"; // "321" | "career"
 let players = { A: "Oyuncu 1", B: "Oyuncu 2" };
 let scores = { A: 0, B: 0 };
+
+// 3-2-1 State
 let recentMatches = [];
 
-// --- ELEMENT REFERANSLARI ---
+// Career State
+let currentCareer = null;
+let currentCareerIndex = 0;
+let careerPool = [...PLAYERS_CAREER];
+
+// --- DOM ELEMENTS ---
 const viewHome = document.getElementById("viewHome");
 const viewSetup = document.getElementById("viewSetup");
-const viewArena = document.getElementById("viewArena");
+const viewArena321 = document.getElementById("viewArena321");
+const viewArenaCareer = document.getElementById("viewArenaCareer");
 
 const headerHomeBtn = document.getElementById("headerHomeBtn");
 const headerResetBtn = document.getElementById("headerResetBtn");
-
 const player1Input = document.getElementById("player1Input");
 const player2Input = document.getElementById("player2Input");
 
-const nameA = document.getElementById("nameA");
-const nameB = document.getElementById("nameB");
-const scoreA = document.getElementById("scoreA");
-const scoreB = document.getElementById("scoreB");
-const p1ScoreBtn = document.getElementById("p1ScoreBtn");
-const p2ScoreBtn = document.getElementById("p2ScoreBtn");
-
-const leagueA = document.getElementById("leagueA");
-const teamA = document.getElementById("teamA");
-const leagueB = document.getElementById("leagueB");
-const teamB = document.getElementById("teamB");
-const statusMessage = document.getElementById("statusMessage");
-
-// --- EKRAN YÖNETİMİ ---
 function showView(view) {
-  [viewHome, viewSetup, viewArena].forEach(v => v.classList.remove("active"));
+  [viewHome, viewSetup, viewArena321, viewArenaCareer].forEach(v => v.classList.remove("active"));
   view.classList.add("active");
 
-  if (view === viewArena) {
-    headerHomeBtn.style.display = "block";
-    headerResetBtn.style.display = "block";
-  } else {
-    headerHomeBtn.style.display = "none";
-    headerResetBtn.style.display = "none";
-  }
+  const inGame = (view === viewArena321 || view === viewArenaCareer);
+  headerHomeBtn.style.display = inGame ? "block" : "none";
+  headerResetBtn.style.display = inGame ? "block" : "none";
 }
 
-// --- OYUN MEKANİĞİ ---
+function updateScoreboard() {
+  ["1", "2"].forEach(s => {
+    document.getElementById(`scoreA${s}`).textContent = scores.A;
+    document.getElementById(`scoreB${s}`).textContent = scores.B;
+    document.getElementById(`nameA${s}`).textContent = players.A;
+    document.getElementById(`nameB${s}`).textContent = players.B;
+    document.getElementById(`p1ScoreBtn${s}`).textContent = `${players.A} Bildi`;
+    document.getElementById(`p2ScoreBtn${s}`).textContent = `${players.B} Bildi`;
+  });
+}
+
+function pulseCard(who, arena) {
+  const c = document.getElementById(`card${who}${arena}`);
+  c.classList.add("pulse");
+  setTimeout(() => c.classList.remove("pulse"), 350);
+}
+
+// --- 3-2-1 GO ENGINE ---
 function buildWeightedPairs() {
   const pairs = [];
-  for (let i = 0; i < POOL.length; i++) {
-    for (let j = i + 1; j < POOL.length; j++) {
-      const a = POOL[i], b = POOL[j];
+  for (let i = 0; i < POOL_321.length; i++) {
+    for (let j = i + 1; j < POOL_321.length; j++) {
+      const a = POOL_321[i], b = POOL_321[j];
       const key = [a.team, b.team].sort().join("|");
       if (recentMatches.includes(key)) continue;
 
       let w = 1;
       if (a.league === b.league) w *= 4;
-      const aBig = BIG_CLUBS.has(a.team), bBig = BIG_CLUBS.has(b.team);
-      if (aBig && bBig) w *= 5;
-      else if (aBig || bBig) w *= 1.5;
-
+      if (BIG_CLUBS.has(a.team) && BIG_CLUBS.has(b.team)) w *= 5;
+      else if (BIG_CLUBS.has(a.team) || BIG_CLUBS.has(b.team)) w *= 1.5;
       pairs.push({ a, b, w });
     }
   }
   return pairs;
 }
 
-function getRandomPair() {
+function nextRound321() {
   const pairs = buildWeightedPairs();
-  const totalWeight = pairs.reduce((sum, p) => sum + p.w, 0);
-  let randomVal = Math.random() * totalWeight;
+  const total = pairs.reduce((s, p) => s + p.w, 0);
+  let r = Math.random() * total;
+  let picked = pairs[pairs.length - 1];
+  for (const p of pairs) { r -= p.w; if (r <= 0) { picked = p; break; } }
 
-  for (const pair of pairs) {
-    randomVal -= pair.w;
-    if (randomVal <= 0) return pair;
-  }
-  return pairs[pairs.length - 1];
-}
-
-function nextRound() {
-  const pair = getRandomPair();
-  recentMatches.push([pair.a.team, pair.b.team].sort().join("|"));
+  recentMatches.push([picked.a.team, picked.b.team].sort().join("|"));
   if (recentMatches.length > 15) recentMatches.shift();
 
-  leagueA.textContent = pair.a.league.toUpperCase();
-  teamA.textContent = pair.a.team;
-  leagueB.textContent = pair.b.league.toUpperCase();
-  teamB.textContent = pair.b.team;
+  document.getElementById("leagueA").textContent = picked.a.league.toUpperCase();
+  document.getElementById("teamA").textContent = picked.a.team;
+  document.getElementById("leagueB").textContent = picked.b.league.toUpperCase();
+  document.getElementById("teamB").textContent = picked.b.team;
 
-  statusMessage.textContent = "";
-  statusMessage.className = "status";
+  const st = document.getElementById("statusMsg321");
+  st.textContent = ""; st.className = "status";
 }
 
-function updateScoreboard() {
-  scoreA.textContent = scores.A;
-  scoreB.textContent = scores.B;
-  nameA.textContent = players.A;
-  nameB.textContent = players.B;
-  p1ScoreBtn.textContent = `${players.A} Bildi`;
-  p2ScoreBtn.textContent = `${players.B} Bildi`;
+// --- KARİYER YOLU ENGINE ---
+function nextCareerRound() {
+  if (careerPool.length === 0) careerPool = [...PLAYERS_CAREER];
+  const rIdx = Math.floor(Math.random() * careerPool.length);
+  currentCareer = careerPool.splice(rIdx, 1)[0];
+  currentCareerIndex = 0;
+
+  document.getElementById("careerPlayerReveal").textContent = "???";
+  document.getElementById("careerStepsContainer").innerHTML = "";
+  document.getElementById("statusMsgCareer").textContent = "";
+  document.getElementById("statusMsgCareer").className = "status";
+  document.getElementById("nextStepBtn").disabled = false;
+  document.getElementById("nextStepBtn").style.opacity = "1";
+
+  revealNextStep();
 }
 
-function givePoint(who) {
+function revealNextStep() {
+  if (!currentCareer) return;
+  if (currentCareerIndex < currentCareer.clubs.length) {
+    const stepEl = document.createElement("div");
+    stepEl.className = "career-step";
+    stepEl.innerHTML = `<span class="step-num">${currentCareerIndex + 1}.</span><span class="step-team">${currentCareer.clubs[currentCareerIndex]}</span>`;
+    document.getElementById("careerStepsContainer").appendChild(stepEl);
+    currentCareerIndex++;
+
+    document.getElementById("stepCounter").textContent = `${currentCareerIndex} / ${currentCareer.clubs.length}`;
+
+    if (currentCareerIndex >= currentCareer.clubs.length) {
+      document.getElementById("nextStepBtn").disabled = true;
+      document.getElementById("nextStepBtn").style.opacity = "0.5";
+    }
+  }
+}
+
+// --- GLOBAL ACTIONS ---
+function handlePoint(who) {
   scores[who]++;
   updateScoreboard();
-  
-  const targetCard = document.getElementById(who === "A" ? "cardA" : "cardB");
-  targetCard.classList.add("pulse");
-  setTimeout(() => targetCard.classList.remove("pulse"), 350);
 
-  statusMessage.textContent = `${players[who]} bildi ve puanı kaptı!`;
-  statusMessage.className = "status win";
-  setTimeout(nextRound, 700);
+  if (currentMode === "321") {
+    pulseCard(who, "1");
+    const st = document.getElementById("statusMsg321");
+    st.textContent = `${players[who]} bildi ve puanı aldı!`;
+    st.className = "status win";
+    setTimeout(nextRound321, 700);
+  } else {
+    pulseCard(who, "2");
+    document.getElementById("careerPlayerReveal").textContent = currentCareer.name;
+    const st = document.getElementById("statusMsgCareer");
+    st.textContent = `${players[who]} doğru bildi: ${currentCareer.name}`;
+    st.className = "status win";
+    setTimeout(nextCareerRound, 1500);
+  }
 }
 
-// --- ETKİNLİK DİNLEYİCİLERİ ---
+// --- EVENTS ---
 document.getElementById("card321Go").addEventListener("click", () => {
+  currentMode = "321";
+  document.getElementById("setupTitle").textContent = "3 - 2 - 1 GO";
   showView(viewSetup);
 });
 
-document.getElementById("setupBackBtn").addEventListener("click", () => {
-  showView(viewHome);
+document.getElementById("cardCareer").addEventListener("click", () => {
+  currentMode = "career";
+  document.getElementById("setupTitle").textContent = "KARİYER YOLU";
+  showView(viewSetup);
 });
+
+document.getElementById("setupBackBtn").addEventListener("click", () => showView(viewHome));
+document.getElementById("brandBtn").addEventListener("click", () => showView(viewHome));
 
 document.getElementById("beginMatchBtn").addEventListener("click", () => {
   players.A = player1Input.value.trim() || "1. Oyuncu";
   players.B = player2Input.value.trim() || "2. Oyuncu";
   scores = { A: 0, B: 0 };
   updateScoreboard();
-  showView(viewArena);
-  nextRound();
+
+  if (currentMode === "321") {
+    showView(viewArena321);
+    nextRound321();
+  } else {
+    showView(viewArenaCareer);
+    nextCareerRound();
+  }
 });
 
-p1ScoreBtn.addEventListener("click", () => givePoint("A"));
-p2ScoreBtn.addEventListener("click", () => givePoint("B"));
-
-document.getElementById("skipBtn").addEventListener("click", () => {
-  statusMessage.textContent = "Bulunamadı, yeni takımlar geliyor...";
-  statusMessage.className = "status";
-  setTimeout(nextRound, 600);
+// 3-2-1 listeners
+document.getElementById("p1ScoreBtn1").addEventListener("click", () => handlePoint("A"));
+document.getElementById("p2ScoreBtn1").addEventListener("click", () => handlePoint("B"));
+document.getElementById("skipBtn321").addEventListener("click", () => {
+  const st = document.getElementById("statusMsg321");
+  st.textContent = "Pas geçildi, yeni takımlar geliyor...";
+  st.className = "status";
+  setTimeout(nextRound321, 600);
 });
 
+// Career listeners
+document.getElementById("p1ScoreBtn2").addEventListener("click", () => handlePoint("A"));
+document.getElementById("p2ScoreBtn2").addEventListener("click", () => handlePoint("B"));
+document.getElementById("nextStepBtn").addEventListener("click", revealNextStep);
+document.getElementById("giveUpCareerBtn").addEventListener("click", () => {
+  document.getElementById("careerPlayerReveal").textContent = currentCareer.name;
+  const st = document.getElementById("statusMsgCareer");
+  st.textContent = `Doğru Cevap: ${currentCareer.name}`;
+  st.className = "status reveal";
+  setTimeout(nextCareerRound, 1800);
+});
+
+// Header listeners
 headerResetBtn.addEventListener("click", () => {
   scores = { A: 0, B: 0 };
   updateScoreboard();
 });
 
 headerHomeBtn.addEventListener("click", () => {
-  player1Input.value = "";
-  player2Input.value = "";
   scores = { A: 0, B: 0 };
   showView(viewHome);
 });

@@ -39,7 +39,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 20px 18px env(safe-area-inset-bottom, 20px);
+  padding: 16px 16px env(safe-area-inset-bottom, 16px);
 }
 
 /* Header */
@@ -47,7 +47,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 .brand {
   font-family: var(--font-display);
@@ -64,7 +64,7 @@ body {
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 500;
-  padding: 8px 12px;
+  padding: 6px 12px;
   border-radius: 8px;
   cursor: pointer;
   transition: all .2s;
@@ -76,21 +76,15 @@ body {
 .view.active { display: flex; }
 
 /* Home Screen */
-.home-hero { text-align: center; margin: 10px 0 24px; }
-.home-hero h1 {
-  font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
-}
+.home-hero { text-align: center; margin: 6px 0 20px; }
+.home-hero h1 { font-family: var(--font-display); font-size: 32px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px; }
 .home-hero p { color: var(--chalk-dim); font-size: 14px; }
-.games-grid { display: flex; flex-direction: column; gap: 14px; }
+.games-grid { display: flex; flex-direction: column; gap: 12px; }
 .game-card {
   background: var(--pitch-900);
   border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 18px;
+  padding: 16px;
   cursor: pointer;
   position: relative;
   transition: transform .15s, border-color .2s;
@@ -106,13 +100,10 @@ body {
   background: var(--floodlight);
   padding: 2px 8px;
   border-radius: 4px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .game-card h2 { font-family: var(--font-display); font-size: 22px; margin-bottom: 4px; color: var(--chalk); }
 .game-card p { font-size: 13px; color: var(--chalk-dim); line-height: 1.4; }
-.game-card.disabled { opacity: 0.5; cursor: not-allowed; border-style: dashed; }
-.game-card.disabled:active { transform: none; }
-.game-card.disabled .game-card-badge { background: var(--pitch-800); color: var(--chalk-dim); }
 
 /* Setup Screen */
 .setup-box {
@@ -154,43 +145,29 @@ body {
 .primary-btn:active { opacity: 0.85; }
 
 /* Scoreboard */
-.score-row { display: flex; gap: 10px; margin-bottom: 16px; }
+.score-row { display: flex; gap: 8px; margin-bottom: 12px; }
 .score-card {
   flex: 1;
   background: var(--pitch-900);
   border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 8px 10px;
   text-align: center;
   transition: transform .15s, border-color .3s;
 }
 .score-card.pulse { transform: scale(1.05); border-color: var(--floodlight); }
 .score-name { font-size: 13px; color: var(--chalk-dim); margin-bottom: 2px; font-weight: 500; }
-.score-num { font-family: var(--font-display); font-size: 30px; font-weight: 700; }
+.score-num { font-family: var(--font-display); font-size: 28px; font-weight: 700; }
 
 /* 3-2-1 GO Arena */
-.stage {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
+.stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
 .team-block { width: 100%; display: flex; flex-direction: column; align-items: center; }
 .league-tag { font-size: 12px; font-weight: 600; color: var(--floodlight); letter-spacing: 1px; margin-bottom: 4px; }
-.team-name { font-family: var(--font-display); font-size: clamp(28px, 8.5vw, 40px); font-weight: 700; line-height: 1.1; }
-.vs { font-family: var(--font-display); font-size: 16px; color: var(--chalk-dim); margin: 10px 0; }
+.team-name { font-family: var(--font-display); font-size: clamp(26px, 8vw, 38px); font-weight: 700; line-height: 1.1; }
+.vs { font-family: var(--font-display); font-size: 16px; color: var(--chalk-dim); margin: 8px 0; }
 
 /* Kariyer Yolu Arena */
-.career-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
+.career-container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
 .career-box {
   width: 100%;
   background: var(--pitch-900);
@@ -210,42 +187,79 @@ body {
   display: flex;
   justify-content: space-between;
 }
-.career-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  overflow-y: auto;
-}
+.career-steps { display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .career-step {
   display: flex;
   align-items: center;
   background: var(--pitch-800);
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 10px 12px;
+  padding: 8px 12px;
   animation: fadeIn .3s ease;
 }
-.step-num {
-  font-family: var(--font-display);
-  color: var(--floodlight);
-  font-size: 16px;
-  width: 24px;
-  font-weight: 700;
-}
+.step-num { font-family: var(--font-display); color: var(--floodlight); font-size: 16px; width: 24px; font-weight: 700; }
 .step-team { font-weight: 600; font-size: 14px; }
 .career-player-reveal {
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--floodlight);
   text-align: center;
-  margin-top: 12px;
-  min-height: 32px;
+  margin-top: 10px;
+  min-height: 30px;
 }
 
-/* Actions */
-.status { min-height: 22px; font-size: 13px; color: var(--chalk-dim); text-align: center; margin: 12px 0 8px; }
+/* 11'i Tamamla Arena */
+.xi-container { flex: 1; display: flex; flex-direction: column; width: 100%; }
+.match-info-card {
+  background: var(--pitch-900);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.match-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--floodlight); }
+.match-sub { font-size: 12px; color: var(--chalk-dim); margin-top: 2px; }
+.pitch-board {
+  background: var(--pitch-900);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  justify-content: space-around;
+}
+.pitch-line { display: flex; justify-content: space-around; gap: 6px; }
+.player-slot {
+  flex: 1;
+  background: var(--pitch-800);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 4px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 48px;
+  position: relative;
+  transition: all .2s;
+}
+.slot-pos { font-size: 10px; font-weight: 700; color: var(--floodlight); letter-spacing: 0.5px; }
+.slot-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.player-slot.hidden-slot {
+  background: var(--pitch-700);
+  border-color: var(--floodlight);
+  cursor: pointer;
+}
+.player-slot.hidden-slot .slot-name { color: var(--floodlight); font-weight: 700; font-family: var(--font-display); font-size: 15px; }
+.player-slot.revealed { background: var(--pitch-800); border-color: var(--win); animation: pulseGreen .4s ease; }
+.player-slot.revealed .slot-name { color: var(--win); font-family: var(--font-body); font-size: 12px; font-weight: 600; }
+
+/* Status & Action Buttons */
+.status { min-height: 20px; font-size: 13px; color: var(--chalk-dim); text-align: center; margin: 10px 0 6px; }
 .status.win { color: var(--win); font-weight: 600; }
 .status.reveal { color: var(--floodlight); font-weight: 600; }
 .action-grid { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
@@ -254,7 +268,7 @@ body {
   flex: 1;
   border: none;
   border-radius: 10px;
-  padding: 14px 6px;
+  padding: 13px 6px;
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 13px;
@@ -263,11 +277,12 @@ body {
 }
 .act-btn.p1 { background: var(--win); }
 .act-btn.p2 { background: var(--blue); color: #fff; }
-.act-btn.skip { background: var(--pitch-900); color: var(--chalk-dim); border: 1px solid var(--line); padding: 12px; }
-.act-btn.reveal-step { background: var(--floodlight); font-size: 14px; padding: 14px; }
+.act-btn.skip { background: var(--pitch-900); color: var(--chalk-dim); border: 1px solid var(--line); padding: 11px; }
+.act-btn.reveal-step { background: var(--floodlight); font-size: 14px; padding: 13px; }
 .act-btn:active { opacity: .8; }
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulseGreen { 0% { transform: scale(0.96); } 50% { transform: scale(1.04); } 100% { transform: scale(1); } }
 </style>
 </head>
 <body>
@@ -303,10 +318,10 @@ body {
         <p>Oynadığı takımlar sırayla açılan gizli futbolcuyu en az adımla tahmin etmeye çalışın.</p>
       </div>
 
-      <div class="game-card disabled">
-        <span class="game-card-badge">Çok Yakında</span>
+      <div class="game-card" id="cardXI">
+        <span class="game-card-badge">Efsane Kadrolar</span>
         <h2>11'i Tamamla</h2>
-        <p>Tarihi maç kadrolarındaki boş mevkileri doldurma kapışması.</p>
+        <p>Tarihi maç kadrolarında soru işaretli mevkileri bulun, sahayı tamamlayın.</p>
       </div>
     </div>
   </main>
@@ -377,10 +392,33 @@ body {
     </div>
   </section>
 
+  <!-- 5. VIEW: 11'İ TAMAMLA ARENASI -->
+  <section class="view" id="viewArenaXI">
+    <div class="score-row">
+      <div class="score-card" id="cardA3"><div class="score-name" id="nameA3">Oyuncu 1</div><div class="score-num" id="scoreA3">0</div></div>
+      <div class="score-card" id="cardB3"><div class="score-name" id="nameB3">Oyuncu 2</div><div class="score-num" id="scoreB3">0</div></div>
+    </div>
+    <div class="xi-container">
+      <div class="match-info-card">
+        <div class="match-title" id="xiMatchTitle">Liverpool 2005</div>
+        <div class="match-sub" id="xiMatchSub">Şampiyonlar Ligi Finali İlk 11'i</div>
+      </div>
+      <div class="pitch-board" id="pitchBoard"></div>
+      <div class="status" id="statusMsgXI"></div>
+    </div>
+    <div class="action-grid">
+      <div class="scorer-buttons">
+        <button class="act-btn p1" id="p1ScoreBtn3">Oyuncu 1 Bildi</button>
+        <button class="act-btn p2" id="p2ScoreBtn3">Oyuncu 2 Bildi</button>
+      </div>
+      <button class="act-btn skip" id="nextMatchXIBtn">Sıradaki Maça Geç</button>
+    </div>
+  </section>
+
 </div>
 
 <script>
-// --- TAKIM VE KARİYER VERİ HAVUZLARI ---
+// --- VERİ HAVUZLARI ---
 const LEAGUES = {
   "Premier Lig": ["Arsenal","Aston Villa","Bournemouth","Brentford","Brighton & Hove Albion","Chelsea","Crystal Palace","Everton","Fulham","Ipswich Town","Liverpool","Manchester City","Manchester United","Newcastle United","Nottingham Forest","Tottenham Hotspur","West Ham United","Wolverhampton"],
   "La Liga": ["FC Barcelona","Real Madrid","Villarreal","Atletico Madrid","Real Betis","Celta Vigo","Real Sociedad","Getafe","Athletic Bilbao","Valencia","Sevilla","Rayo Vallecano","Osasuna","Espanyol","Mallorca","Girona"],
@@ -410,29 +448,82 @@ const PLAYERS_CAREER = [
   { name: "Cenk Tosun", clubs: ["Eintracht Frankfurt", "Gaziantepspor", "Beşiktaş", "Everton", "Crystal Palace", "Fenerbahçe"] },
   { name: "Karim Benzema", clubs: ["Olympique Lyonnais", "Real Madrid", "Al-Ittihad"] },
   { name: "Radamel Falcao", clubs: ["River Plate", "Porto", "Atletico Madrid", "Monaco", "Manchester United", "Chelsea", "Galatasaray", "Rayo Vallecano"] },
-  { name: "Hakan Çalhanoğlu", clubs: ["Karlsruher", "Hamburg", "Bayer Leverkusen", "Milan", "Inter"] },
-  { name: "Angel Di Maria", clubs: ["Rosario Central", "Benfica", "Real Madrid", "Manchester United", "Paris Saint-Germain", "Juventus", "Benfica"] },
-  { name: "Burak Yılmaz", clubs: ["Antalyaspor", "Beşiktaş", "Manisaspor", "Fenerbahçe", "Eskişehirspor", "Trabzonspor", "Galatasaray", "Beijing Guoan", "Lille", "Fortuna Sittard"] }
+  { name: "Hakan Çalhanoğlu", clubs: ["Karlsruher", "Hamburg", "Bayer Leverkusen", "Milan", "Inter"] }
 ];
 
-// --- STATE ---
-let currentMode = "321"; // "321" | "career"
+const HISTORIC_MATCHES = [
+  {
+    title: "Liverpool (2005)",
+    sub: "İstanbul Mucizesi - Şampiyonlar Ligi Finali",
+    formation: [
+      [{ pos: "KL", name: "Dudek" }],
+      [{ pos: "RB", name: "Finnan" }, { pos: "CB", name: "Carragher" }, { pos: "CB", name: "Hyypiä" }, { pos: "LB", name: "Traore" }],
+      [{ pos: "RM", name: "Luis Garcia" }, { pos: "CM", name: "Gerrard" }, { pos: "CM", name: "Xabi Alonso" }, { pos: "LM", name: "Riise" }],
+      [{ pos: "ST", name: "Kewell" }, { pos: "ST", name: "Baros" }]
+    ]
+  },
+  {
+    title: "Milan (2005)",
+    sub: "İstanbul Şampiyonlar Ligi Finali İlk 11'i",
+    formation: [
+      [{ pos: "KL", name: "Dida" }],
+      [{ pos: "RB", name: "Cafu" }, { pos: "CB", name: "Stam" }, { pos: "CB", name: "Nesta" }, { pos: "LB", name: "Maldini" }],
+      [{ pos: "CDM", name: "Pirlo" }, { pos: "CM", name: "Gattuso" }, { pos: "CM", name: "Seedorf" }, { pos: "CAM", name: "Kaka" }],
+      [{ pos: "ST", name: "Shevchenko" }, { pos: "ST", name: "Crespo" }]
+    ]
+  },
+  {
+    title: "Türkiye (EURO 2008)",
+    sub: "Hırvatistan Çeyrek Final Destanı",
+    formation: [
+      [{ pos: "KL", name: "Rüştü Reçber" }],
+      [{ pos: "RB", name: "Sabri Sarıoğlu" }, { pos: "CB", name: "Emre Aşık" }, { pos: "CB", name: "Gökhan Zan" }, { pos: "LB", name: "Hakan Balta" }],
+      [{ pos: "CDM", name: "Mehmet Topal" }, { pos: "RM", name: "Hamit Altıntop" }, { pos: "LM", name: "Arda Turan" }, { pos: "CAM", name: "Tuncay Şanlı" }],
+      [{ pos: "ST", name: "Nihat Kahveci" }, { pos: "ST", name: "Semih Şentürk" }]
+    ]
+  },
+  {
+    title: "Galatasaray (2000)",
+    sub: "UEFA Kupası Finali - Arsenal Maçı",
+    formation: [
+      [{ pos: "KL", name: "Claudio Taffarel" }],
+      [{ pos: "RB", name: "Capone" }, { pos: "CB", name: "Popescu" }, { pos: "CB", name: "Bülent Korkmaz" }, { pos: "LB", name: "Ergün Penbe" }],
+      [{ pos: "CDM", name: "Suat Kaya" }, { pos: "RM", name: "Okan Buruk" }, { pos: "LM", name: "Ümit Davala" }, { pos: "CAM", name: "Gheorghe Hagi" }],
+      [{ pos: "ST", name: "Arif Erdem" }, { pos: "ST", name: "Hakan Şükür" }]
+    ]
+  },
+  {
+    title: "Barcelona (2011)",
+    sub: "Wembley Şampiyonlar Ligi Finali (Pep Guardiola)",
+    formation: [
+      [{ pos: "KL", name: "Valdes" }],
+      [{ pos: "RB", name: "Dani Alves" }, { pos: "CB", name: "Mascherano" }, { pos: "CB", name: "Pique" }, { pos: "LB", name: "Abidal" }],
+      [{ pos: "CDM", name: "Busquets" }, { pos: "CM", name: "Xavi" }, { pos: "CM", name: "Iniesta" }],
+      [{ pos: "RW", name: "Pedro" }, { pos: "CF", name: "Messi" }, { pos: "LW", name: "David Villa" }]
+    ]
+  }
+];
+
+// --- APP STATE ---
+let currentMode = "321"; // "321" | "career" | "xi"
 let players = { A: "Oyuncu 1", B: "Oyuncu 2" };
 let scores = { A: 0, B: 0 };
 
-// 3-2-1 State
-let recentMatches = [];
-
-// Career State
+let recentMatches321 = [];
 let currentCareer = null;
 let currentCareerIndex = 0;
 let careerPool = [...PLAYERS_CAREER];
 
-// --- DOM ELEMENTS ---
+let matchPoolXI = [...HISTORIC_MATCHES];
+let currentXI = null;
+let hiddenSlotsCount = 0;
+
+// --- DOM REFERENCES ---
 const viewHome = document.getElementById("viewHome");
 const viewSetup = document.getElementById("viewSetup");
 const viewArena321 = document.getElementById("viewArena321");
 const viewArenaCareer = document.getElementById("viewArenaCareer");
+const viewArenaXI = document.getElementById("viewArenaXI");
 
 const headerHomeBtn = document.getElementById("headerHomeBtn");
 const headerResetBtn = document.getElementById("headerResetBtn");
@@ -440,16 +531,16 @@ const player1Input = document.getElementById("player1Input");
 const player2Input = document.getElementById("player2Input");
 
 function showView(view) {
-  [viewHome, viewSetup, viewArena321, viewArenaCareer].forEach(v => v.classList.remove("active"));
+  [viewHome, viewSetup, viewArena321, viewArenaCareer, viewArenaXI].forEach(v => v.classList.remove("active"));
   view.classList.add("active");
 
-  const inGame = (view === viewArena321 || view === viewArenaCareer);
+  const inGame = (view === viewArena321 || view === viewArenaCareer || view === viewArenaXI);
   headerHomeBtn.style.display = inGame ? "block" : "none";
   headerResetBtn.style.display = inGame ? "block" : "none";
 }
 
 function updateScoreboard() {
-  ["1", "2"].forEach(s => {
+  ["1", "2", "3"].forEach(s => {
     document.getElementById(`scoreA${s}`).textContent = scores.A;
     document.getElementById(`scoreB${s}`).textContent = scores.B;
     document.getElementById(`nameA${s}`).textContent = players.A;
@@ -465,14 +556,14 @@ function pulseCard(who, arena) {
   setTimeout(() => c.classList.remove("pulse"), 350);
 }
 
-// --- 3-2-1 GO ENGINE ---
+// --- 3-2-1 ENGINE ---
 function buildWeightedPairs() {
   const pairs = [];
   for (let i = 0; i < POOL_321.length; i++) {
     for (let j = i + 1; j < POOL_321.length; j++) {
       const a = POOL_321[i], b = POOL_321[j];
       const key = [a.team, b.team].sort().join("|");
-      if (recentMatches.includes(key)) continue;
+      if (recentMatches321.includes(key)) continue;
 
       let w = 1;
       if (a.league === b.league) w *= 4;
@@ -491,8 +582,8 @@ function nextRound321() {
   let picked = pairs[pairs.length - 1];
   for (const p of pairs) { r -= p.w; if (r <= 0) { picked = p; break; } }
 
-  recentMatches.push([picked.a.team, picked.b.team].sort().join("|"));
-  if (recentMatches.length > 15) recentMatches.shift();
+  recentMatches321.push([picked.a.team, picked.b.team].sort().join("|"));
+  if (recentMatches321.length > 15) recentMatches321.shift();
 
   document.getElementById("leagueA").textContent = picked.a.league.toUpperCase();
   document.getElementById("teamA").textContent = picked.a.team;
@@ -503,7 +594,7 @@ function nextRound321() {
   st.textContent = ""; st.className = "status";
 }
 
-// --- KARİYER YOLU ENGINE ---
+// --- CAREER ENGINE ---
 function nextCareerRound() {
   if (careerPool.length === 0) careerPool = [...PLAYERS_CAREER];
   const rIdx = Math.floor(Math.random() * careerPool.length);
@@ -538,7 +629,71 @@ function revealNextStep() {
   }
 }
 
-// --- GLOBAL ACTIONS ---
+// --- 11'İ TAMAMLA ENGINE ---
+function nextXIRound() {
+  if (matchPoolXI.length === 0) matchPoolXI = [...HISTORIC_MATCHES];
+  const rIdx = Math.floor(Math.random() * matchPoolXI.length);
+  currentXI = matchPoolXI.splice(rIdx, 1)[0];
+
+  document.getElementById("xiMatchTitle").textContent = currentXI.title;
+  document.getElementById("xiMatchSub").textContent = currentXI.sub;
+
+  const st = document.getElementById("statusMsgXI");
+  st.textContent = "Soru işaretli 3 futbolcuyu bulun. Açmak için kutuya tıklayın.";
+  st.className = "status";
+
+  const flatPlayers = [];
+  currentXI.formation.forEach((row, rI) => {
+    row.forEach((p, cI) => flatPlayers.push({ rI, cI, name: p.name }));
+  });
+
+  // 3 rastgele gizlenecek oyuncu seçimi
+  const shuffled = [...flatPlayers].sort(() => 0.5 - Math.random());
+  const hiddenKeys = new Set(shuffled.slice(0, 3).map(p => `${p.rI}-${p.cI}`));
+  hiddenSlotsCount = 3;
+
+  const board = document.getElementById("pitchBoard");
+  board.innerHTML = "";
+
+  currentXI.formation.forEach((row, rI) => {
+    const lineEl = document.createElement("div");
+    lineEl.className = "pitch-line";
+
+    row.forEach((player, cI) => {
+      const isHidden = hiddenKeys.has(`${rI}-${cI}`);
+      const slotEl = document.createElement("div");
+      slotEl.className = `player-slot ${isHidden ? "hidden-slot" : ""}`;
+      slotEl.innerHTML = `
+        <span class="slot-pos">${player.pos}</span>
+        <span class="slot-name">${isHidden ? "???" : player.name}</span>
+      `;
+
+      if (isHidden) {
+        slotEl.addEventListener("click", () => {
+          if (!slotEl.classList.contains("revealed")) {
+            slotEl.classList.remove("hidden-slot");
+            slotEl.classList.add("revealed");
+            slotEl.querySelector(".slot-name").textContent = player.name;
+            hiddenSlotsCount--;
+            st.textContent = `Açıldı: ${player.name}! Puanı hangi oyuncu bildiyse ona verin.`;
+            st.className = "status reveal";
+
+            if (hiddenSlotsCount <= 0) {
+              setTimeout(() => {
+                st.textContent = "Tüm 11 tamamlandı! Sıradaki kadroya geçebilirsiniz.";
+                st.className = "status win";
+              }, 600);
+            }
+          }
+        });
+      }
+      lineEl.appendChild(slotEl);
+    });
+    board.appendChild(lineEl);
+  });
+}
+
+// --- GLOBAL POINT HANDLER ---
 function handlePoint(who) {
   scores[who]++;
   updateScoreboard();
@@ -549,17 +704,22 @@ function handlePoint(who) {
     st.textContent = `${players[who]} bildi ve puanı aldı!`;
     st.className = "status win";
     setTimeout(nextRound321, 700);
-  } else {
+  } else if (currentMode === "career") {
     pulseCard(who, "2");
     document.getElementById("careerPlayerReveal").textContent = currentCareer.name;
     const st = document.getElementById("statusMsgCareer");
     st.textContent = `${players[who]} doğru bildi: ${currentCareer.name}`;
     st.className = "status win";
     setTimeout(nextCareerRound, 1500);
+  } else if (currentMode === "xi") {
+    pulseCard(who, "3");
+    const st = document.getElementById("statusMsgXI");
+    st.textContent = `${players[who]} puanı hanesine yazdırdı!`;
+    st.className = "status win";
   }
 }
 
-// --- EVENTS ---
+// --- MENU & NAVIGATION ---
 document.getElementById("card321Go").addEventListener("click", () => {
   currentMode = "321";
   document.getElementById("setupTitle").textContent = "3 - 2 - 1 GO";
@@ -569,6 +729,12 @@ document.getElementById("card321Go").addEventListener("click", () => {
 document.getElementById("cardCareer").addEventListener("click", () => {
   currentMode = "career";
   document.getElementById("setupTitle").textContent = "KARİYER YOLU";
+  showView(viewSetup);
+});
+
+document.getElementById("cardXI").addEventListener("click", () => {
+  currentMode = "xi";
+  document.getElementById("setupTitle").textContent = "11'İ TAMAMLA";
   showView(viewSetup);
 });
 
@@ -584,13 +750,16 @@ document.getElementById("beginMatchBtn").addEventListener("click", () => {
   if (currentMode === "321") {
     showView(viewArena321);
     nextRound321();
-  } else {
+  } else if (currentMode === "career") {
     showView(viewArenaCareer);
     nextCareerRound();
+  } else if (currentMode === "xi") {
+    showView(viewArenaXI);
+    nextXIRound();
   }
 });
 
-// 3-2-1 listeners
+// Arena button listeners
 document.getElementById("p1ScoreBtn1").addEventListener("click", () => handlePoint("A"));
 document.getElementById("p2ScoreBtn1").addEventListener("click", () => handlePoint("B"));
 document.getElementById("skipBtn321").addEventListener("click", () => {
@@ -600,7 +769,6 @@ document.getElementById("skipBtn321").addEventListener("click", () => {
   setTimeout(nextRound321, 600);
 });
 
-// Career listeners
 document.getElementById("p1ScoreBtn2").addEventListener("click", () => handlePoint("A"));
 document.getElementById("p2ScoreBtn2").addEventListener("click", () => handlePoint("B"));
 document.getElementById("nextStepBtn").addEventListener("click", revealNextStep);
@@ -612,7 +780,11 @@ document.getElementById("giveUpCareerBtn").addEventListener("click", () => {
   setTimeout(nextCareerRound, 1800);
 });
 
-// Header listeners
+document.getElementById("p1ScoreBtn3").addEventListener("click", () => handlePoint("A"));
+document.getElementById("p2ScoreBtn3").addEventListener("click", () => handlePoint("B"));
+document.getElementById("nextMatchXIBtn").addEventListener("click", nextXIRound);
+
+// Header Buttons
 headerResetBtn.addEventListener("click", () => {
   scores = { A: 0, B: 0 };
   updateScoreboard();

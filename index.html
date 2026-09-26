@@ -32,6 +32,7 @@ body {
   display: flex;
   justify-content: center;
   -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 .app-container {
   width: 100%;
@@ -312,11 +313,7 @@ body {
 }
 
 /* Guess Input Group */
-.guess-group {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-}
+.guess-group { display: flex; gap: 8px; margin-top: 10px; }
 .guess-input {
   flex: 1;
   background: var(--pitch-800);
@@ -522,7 +519,6 @@ body {
         <div class="trophy-reveal-name" id="trophyRevealName">???</div>
       </div>
 
-      <!-- TAHMİN YAZMA ALANI -->
       <div class="guess-group">
         <input type="text" class="guess-input" id="trophyGuessInput" placeholder="Futbolcu adını yazın..." autocomplete="off">
         <button class="guess-btn" id="trophyGuessBtn">Tahmin Et</button>
@@ -542,6 +538,93 @@ body {
 </div>
 
 <script>
+// --- SES VE TİTREŞİM MOTORU (WEB AUDIO API) ---
+let audioCtx = null;
+function getAudioContext() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (AudioContext) audioCtx = new AudioContext();
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+const SoundEngine = {
+  tap() {
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(450, ctx.currentTime);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.05);
+    } catch(e) {}
+  },
+  whistle() {
+    try {
+      if (navigator.vibrate) navigator.vibrate([60, 40, 60]);
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(1800, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(2400, ctx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.18, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.2);
+    } catch(e) {}
+  },
+  correct() {
+    try {
+      if (navigator.vibrate) navigator.vibrate(80);
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      [523.25, 659.25, 783.99].forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(freq, ctx.currentTime + (idx * 0.08));
+        gain.gain.setValueAtTime(0.15, ctx.currentTime + (idx * 0.08));
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (idx * 0.08) + 0.2);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + (idx * 0.08));
+        osc.stop(ctx.currentTime + (idx * 0.08) + 0.2);
+      });
+    } catch(e) {}
+  },
+  wrong() {
+    try {
+      if (navigator.vibrate) navigator.vibrate([100, 60, 100]);
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(160, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(90, ctx.currentTime + 0.25);
+      gain.gain.setValueAtTime(0.18, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.25);
+    } catch(e) {}
+  }
+};
+
 // --- VERİ HAVUZLARI ---
 const LEAGUES = {
   "Premier Lig": ["Arsenal","Aston Villa","Bournemouth","Brentford","Brighton & Hove Albion","Chelsea","Crystal Palace","Everton","Fulham","Ipswich Town","Liverpool","Manchester City","Manchester United","Newcastle United","Nottingham Forest","Tottenham Hotspur","West Ham United","Wolverhampton"],
@@ -628,7 +711,6 @@ const HISTORIC_MATCHES = [
   }
 ];
 
-// --- KUPA AVCISI (YILSIZ VE BALLON D'OR'SUZ HAVUZ) ---
 const TROPHY_PLAYERS = [
   {
     name: "Lionel Messi",
@@ -760,7 +842,7 @@ let hiddenSlotsCount = 0;
 let trophyPool = [...TROPHY_PLAYERS];
 let currentTrophyPlayer = null;
 let trophyLives = 2;
-let trophyTurn = "A"; // "A" veya "B"
+let trophyTurn = "A";
 
 // --- DOM REFERENCES ---
 const viewHome = document.getElementById("viewHome");
@@ -859,6 +941,7 @@ function nextCareerRound() {
 function revealNextStep() {
   if (!currentCareer) return;
   if (currentCareerIndex < currentCareer.clubs.length) {
+    SoundEngine.tap();
     const stepEl = document.createElement("div");
     stepEl.className = "career-step";
     stepEl.innerHTML = `<span class="step-num">${currentCareerIndex + 1}.</span><span class="step-team">${currentCareer.clubs[currentCareerIndex]}</span>`;
@@ -915,6 +998,7 @@ function nextXIRound() {
       if (isHidden) {
         slotEl.addEventListener("click", () => {
           if (!slotEl.classList.contains("revealed")) {
+            SoundEngine.whistle();
             slotEl.classList.remove("hidden-slot");
             slotEl.classList.add("revealed");
             slotEl.querySelector(".slot-name").textContent = player.name;
@@ -924,6 +1008,7 @@ function nextXIRound() {
 
             if (hiddenSlotsCount <= 0) {
               setTimeout(() => {
+                SoundEngine.correct();
                 st.textContent = "Tüm 11 tamamlandı! Sıradaki maça geçebilirsiniz.";
                 st.className = "status win";
               }, 600);
@@ -995,6 +1080,7 @@ function checkTrophyGuess() {
   if (isCorrect) {
     handlePoint(trophyTurn);
   } else {
+    SoundEngine.wrong();
     trophyLives--;
     renderTrophyLives();
     inputEl.value = "";
@@ -1017,6 +1103,7 @@ function checkTrophyGuess() {
 
 // --- GLOBAL POINT HANDLER ---
 function handlePoint(who) {
+  SoundEngine.correct();
   scores[who]++;
   updateScoreboard();
 
@@ -1052,33 +1139,38 @@ function handlePoint(who) {
 
 // --- MENU & NAVIGATION ---
 document.getElementById("card321Go").addEventListener("click", () => {
+  SoundEngine.tap();
   currentMode = "321";
   document.getElementById("setupTitle").textContent = "3 - 2 - 1 GO";
   showView(viewSetup);
 });
 
 document.getElementById("cardCareer").addEventListener("click", () => {
+  SoundEngine.tap();
   currentMode = "career";
   document.getElementById("setupTitle").textContent = "KARİYER YOLU";
   showView(viewSetup);
 });
 
 document.getElementById("cardXI").addEventListener("click", () => {
+  SoundEngine.tap();
   currentMode = "xi";
   document.getElementById("setupTitle").textContent = "11'İ TAMAMLA";
   showView(viewSetup);
 });
 
 document.getElementById("cardTrophy").addEventListener("click", () => {
+  SoundEngine.tap();
   currentMode = "trophy";
   document.getElementById("setupTitle").textContent = "KUPA AVICISI";
   showView(viewSetup);
 });
 
-document.getElementById("setupBackBtn").addEventListener("click", () => showView(viewHome));
-document.getElementById("brandBtn").addEventListener("click", () => showView(viewHome));
+document.getElementById("setupBackBtn").addEventListener("click", () => { SoundEngine.tap(); showView(viewHome); });
+document.getElementById("brandBtn").addEventListener("click", () => { SoundEngine.tap(); showView(viewHome); });
 
 document.getElementById("beginMatchBtn").addEventListener("click", () => {
+  SoundEngine.whistle();
   players.A = player1Input.value.trim() || "1. Oyuncu";
   players.B = player2Input.value.trim() || "2. Oyuncu";
   scores = { A: 0, B: 0 };
@@ -1103,6 +1195,7 @@ document.getElementById("beginMatchBtn").addEventListener("click", () => {
 document.getElementById("p1ScoreBtn1").addEventListener("click", () => handlePoint("A"));
 document.getElementById("p2ScoreBtn1").addEventListener("click", () => handlePoint("B"));
 document.getElementById("skipBtn321").addEventListener("click", () => {
+  SoundEngine.tap();
   const st = document.getElementById("statusMsg321");
   st.textContent = "Pas geçildi, yeni takımlar geliyor...";
   st.className = "status";
@@ -1113,6 +1206,7 @@ document.getElementById("p1ScoreBtn2").addEventListener("click", () => handlePoi
 document.getElementById("p2ScoreBtn2").addEventListener("click", () => handlePoint("B"));
 document.getElementById("nextStepBtn").addEventListener("click", revealNextStep);
 document.getElementById("giveUpCareerBtn").addEventListener("click", () => {
+  SoundEngine.wrong();
   document.getElementById("careerPlayerReveal").textContent = currentCareer.name;
   const st = document.getElementById("statusMsgCareer");
   st.textContent = `Doğru Cevap: ${currentCareer.name}`;
@@ -1122,7 +1216,7 @@ document.getElementById("giveUpCareerBtn").addEventListener("click", () => {
 
 document.getElementById("p1ScoreBtn3").addEventListener("click", () => handlePoint("A"));
 document.getElementById("p2ScoreBtn3").addEventListener("click", () => handlePoint("B"));
-document.getElementById("nextMatchXIBtn").addEventListener("click", nextXIRound);
+document.getElementById("nextMatchXIBtn").addEventListener("click", () => { SoundEngine.whistle(); nextXIRound(); });
 
 document.getElementById("p1ScoreBtn4").addEventListener("click", () => handlePoint("A"));
 document.getElementById("p2ScoreBtn4").addEventListener("click", () => handlePoint("B"));
@@ -1133,6 +1227,7 @@ document.getElementById("trophyGuessInput").addEventListener("keydown", (e) => {
 });
 
 document.getElementById("giveUpTrophyBtn").addEventListener("click", () => {
+  SoundEngine.wrong();
   document.getElementById("trophyRevealName").textContent = currentTrophyPlayer.name;
   const st = document.getElementById("statusMsgTrophy");
   st.textContent = `Doğru Cevap: ${currentTrophyPlayer.name}`;
@@ -1142,11 +1237,13 @@ document.getElementById("giveUpTrophyBtn").addEventListener("click", () => {
 
 // Header Buttons
 headerResetBtn.addEventListener("click", () => {
+  SoundEngine.tap();
   scores = { A: 0, B: 0 };
   updateScoreboard();
 });
 
 headerHomeBtn.addEventListener("click", () => {
+  SoundEngine.tap();
   scores = { A: 0, B: 0 };
   showView(viewHome);
 });
